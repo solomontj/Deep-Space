@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    Rigidbody2D rb;
     public float moveSpeed; // Public variable to set the player's movement speed in the Unity Editor
     public bool isMoving; // A flag to check if the player is currently moving
     public Vector2 input; // A Vector2 to store the player's input direction
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private void Awake() 
     {
         animator = GetComponent<Animator>();
+        rb = gameObject.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame by Unity
@@ -88,4 +90,6 @@ public class PlayerController : MonoBehaviour
         }
         return true;
     }
+
+    
 }
