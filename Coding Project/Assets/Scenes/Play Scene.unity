@@ -267,6 +267,8 @@ GameObject:
   - component: {fileID: 60519819}
   - component: {fileID: 60519820}
   - component: {fileID: 60519821}
+  - component: {fileID: 60519823}
+  - component: {fileID: 60519822}
   m_Layer: 11
   m_Name: Door
   m_TagString: Untagged
@@ -372,7 +374,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -399,6 +401,90 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDoorOpen: 0
+--- !u!66 &60519822
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 60519817}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 1
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 60519820}
+    m_ColliderPaths:
+    - - X: 10000000
+        Y: 1150000
+      - X: -10000000
+        Y: 1150000
+      - X: -10000000
+        Y: -1150000
+      - X: 10000000
+        Y: -1150000
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 0.99997073, y: -0.115}
+      - {x: 0.99997073, y: 0.115}
+      - {x: -1, y: 0.1149707}
+      - {x: -0.99997073, y: -0.115}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
+  m_UseDelaunayMesh: 0
+  m_CompositeGameObject: {fileID: 60519817}
+--- !u!50 &60519823
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 60519817}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &417223734
 GameObject:
   m_ObjectHideFlags: 0
@@ -10879,6 +10965,9 @@ MonoBehaviour:
   wallsLayer:
     serializedVersion: 2
     m_Bits: 1024
+  doorsLayer:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!212 &742998827
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12009,7 +12098,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2027787259}
   - component: {fileID: 2027787258}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34254,6 +34343,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 9, y: 18, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 13
+      m_TileSpriteIndex: 12
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 1
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: 26, y: 18, z: 0}
     second:
       serializedVersion: 2
@@ -34662,7 +34761,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 2246
+  - m_RefCount: 2247
     m_Data: {fileID: 11400000, guid: 4932920b1c4c53f4daa542a4d5fc918a, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 0
@@ -34689,10 +34788,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 2246
+  - m_RefCount: 2247
     m_Data: {fileID: 21300000, guid: 158f41f158140734194319d37d4b2233, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 2246
+  - m_RefCount: 2247
     m_Data:
       e00: 1
       e01: 0
@@ -34713,7 +34812,7 @@ Tilemap:
   m_TileColorArray:
   - m_RefCount: 0
     m_Data: {r: 0, g: 0, b: 0, a: 0}
-  - m_RefCount: 2246
+  - m_RefCount: 2247
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1

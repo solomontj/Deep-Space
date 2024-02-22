@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
 
     public LayerMask wallsLayer;
+    public LayerMask doorsLayer;
 
     private void Awake() 
     {
@@ -84,10 +85,18 @@ public class PlayerController : MonoBehaviour
 
     private bool IsWalkable(Vector3 targetPos)
     {
+        // Collider for walls
         if (Physics2D.OverlapCircle(targetPos, 0.2f, wallsLayer) != null)
         {
             return false;
         }
+
+        // Collider for doors
+        if (Physics2D.OverlapCircle(targetPos, 0.2f, doorsLayer) != null)
+        {
+            return false;
+        }
+        
         return true;
     }
 
