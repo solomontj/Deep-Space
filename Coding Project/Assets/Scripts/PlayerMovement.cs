@@ -17,15 +17,14 @@ public class PlayerMovement : MonoBehaviour
     Animator animator;
     string currentState;
     string idleState = PLAYER_DOWN;
-    const string PLAYER_DOWN = "IdleDown";
-    const string PLAYER_UP = "IdleUp";
-    const string PLAYER_LEFT = "IdleLeft";
-    const string PLAYER_RIGHT = "IdleRight";
-    const string PLAYER_DOWN_MOVE = "WalkDown";
-    const string PLAYER_UP_MOVE = "WalkUp";
-    const string PLAYER_LEFT_MOVE = "WalkLeft";
-    const string PLAYER_RIGHT_MOVE = "WalkRight";
-    
+    const string PLAYER_DOWN = "Player_down";
+    const string PLAYER_UP = "Player_up";
+    const string PLAYER_LEFT = "Player_left";
+    const string PLAYER_DOWN_MOVE = "Player_down_move";
+    const string PLAYER_UP_MOVE = "Player_up_move";
+    const string PLAYER_LEFT_MOVE = "Player_left_move";
+    const string PLAYER_RIGHT = "Player_left2";
+    const string PLAYER_RIGHT_MOVE = "Player_left_move2";
 
     // Start is called before the first frame update
     void Start()
@@ -49,15 +48,17 @@ public class PlayerMovement : MonoBehaviour
                 inputVertical *= speedLimiter;
             }
 
-            rb.velocity = new UnityEngine.Vector2(inputHorizontal * walkSpeed, inputVertical * walkSpeed);
+            rb.velocity = new Vector2(inputHorizontal * walkSpeed, inputVertical * walkSpeed);
 
             if(inputHorizontal < 0) {
+                this.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
                 idleState = PLAYER_LEFT;
                 ChangeAnimationState(PLAYER_LEFT_MOVE);
             }
             else if(inputHorizontal > 0) {
-                idleState = PLAYER_RIGHT;
-                ChangeAnimationState(PLAYER_RIGHT_MOVE);
+                this.transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+                idleState = PLAYER_LEFT;
+                ChangeAnimationState(PLAYER_LEFT_MOVE);
             }
             else if(inputVertical < 0) {
                 idleState = PLAYER_DOWN;
@@ -70,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
         else{
-            rb.velocity = new UnityEngine.Vector2(0f, 0f);
+            rb.velocity = new Vector2(0f, 0f);
             ChangeAnimationState(idleState); 
         }
     }
@@ -85,5 +86,3 @@ public class PlayerMovement : MonoBehaviour
         currentState = newState;
     }
 }
-
-
