@@ -8,8 +8,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     
     [Header("UI")]
     public Image image;
-    public Vector2 screenPosition;
-    public Vector2 worldPosition;
     public Text countText;
     public Item item;
     [HideInInspector] public Transform parentAfterDrag;
@@ -34,9 +32,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     }
 
     public void OnDrag(PointerEventData eventData){
-        screenPosition = Input.mousePosition;
-        worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
-        this.transform.position = worldPosition;
+        this.transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData){
