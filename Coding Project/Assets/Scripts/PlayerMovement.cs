@@ -25,7 +25,11 @@ public class PlayerMovement : MonoBehaviour
     const string PLAYER_UP_MOVE = "WalkUp";
     const string PLAYER_LEFT_MOVE = "WalkLeft";
     const string PLAYER_RIGHT_MOVE = "WalkRight";
-    
+
+    public AudioSource step1Sound;
+    public AudioSource step2Sound;
+    bool isStep1 = true;
+
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +55,9 @@ public class PlayerMovement : MonoBehaviour
 
             rb.velocity = new UnityEngine.Vector2(inputHorizontal * walkSpeed, inputVertical * walkSpeed);
 
-            if(inputHorizontal < 0) {
+            PlayStepSound();
+
+            if (inputHorizontal < 0) {
                 idleState = PLAYER_LEFT;
                 ChangeAnimationState(PLAYER_LEFT_MOVE);
             }
@@ -74,6 +80,21 @@ public class PlayerMovement : MonoBehaviour
             ChangeAnimationState(idleState); 
         }
     }
+
+    void PlayStepSound()
+    {
+        // Toggle between step1 and step2
+        if (isStep1 && !step1Sound.isPlaying)
+        {
+            step1Sound.Play();
+        }
+        else if (!isStep1 && !step2Sound.isPlaying)
+        {
+            step2Sound.Play();
+        }
+        isStep1 = !isStep1; // Switch steps
+    }
+
 
     // Animation state changer
     void ChangeAnimationState(string newState)

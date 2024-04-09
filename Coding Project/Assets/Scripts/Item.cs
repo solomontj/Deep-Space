@@ -29,5 +29,7 @@ public enum ActionType {
     Dig,
     Mine,
     Light,
-    Key
+    Key,
+    Map,
+    Charge
 }

@@ -19,6 +19,7 @@ public class FlashlightPickup : MonoBehaviour
                 }
                 isEmpty = true;
                 this.spriteRenderer.enabled = false;
+                inventoryManager.flashCheck = true;
             }
         }
     }

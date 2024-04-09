@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - PuzzleButton
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - Floors
   - SolidObjects
   - Doors
-  - 
-  - 
+  - Player
+  - PuzzlePiece
   - 
   - 
   - 
@@ -49,4 +50,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 823557009
+    locked: 0
+  - name: wire
+    uniqueID: 3696017183
     locked: 0

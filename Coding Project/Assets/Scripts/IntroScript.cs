@@ -7,7 +7,8 @@ public class IntroScript : MonoBehaviour
     public Image[] images; // Assign all your images in the inspector
     public Image[] subtitles;
     public Button nextSceneButton; // Assign this in the inspector
-
+    public AudioSource[] audioSources;
+    public AudioSource nextButton;
     public float delayBetweenImages = 2f; // Delay in seconds between images
 
     //private int currentImageIndex = 0;
@@ -20,6 +21,16 @@ public class IntroScript : MonoBehaviour
         {
             if (image != null)
                 image.gameObject.SetActive(false);
+        }
+        nextButton.playOnAwake = false;
+        nextButton.Stop();
+        foreach (var audio in audioSources)
+        {
+            if (audio != null)
+            {
+                audio.playOnAwake = false;
+                audio.Stop(); // Ensure that the audio is stopped
+            }
         }
 
         // Initially disable all captions
@@ -45,10 +56,11 @@ public class IntroScript : MonoBehaviour
                 // Enable the current image and subtitle
                 images[i].gameObject.SetActive(true);
                 subtitles[i].gameObject.SetActive(true);
+                audioSources[i].Play();
 
                 // Wait for the specified delay
                 yield return new WaitForSeconds(delayBetweenImages);
-
+                audioSources[i].Stop();
                 // After the delay, disable them before the next iteration
                 //images[i].gameObject.SetActive(false);
                 subtitles[i].gameObject.SetActive(false);
@@ -67,6 +79,6 @@ public class IntroScript : MonoBehaviour
     void GoToNextScene()
     {
         SceneManager.LoadScene(2);
-
+        nextButton.Play();
     }
 }

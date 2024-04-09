@@ -8,6 +8,8 @@ public class InventoryManager : MonoBehaviour
     public Item[] startItems;
     public InventorySlot[] inventorySlots;
     public GameObject inventoryItemPrefab;
+    public GameObject mapImage, playerIconImage, exitButtonImage;
+    public bool flashCheck = false;
     int selectedSlot = -1;
 
     private void Awake(){
@@ -17,8 +19,8 @@ public class InventoryManager : MonoBehaviour
     private void Start() {
         ChangeSelectedSlot(0);
         foreach(var item in startItems) {
-            if (item.name == "Coin") {
-                for(int i=0; i<10; i++){
+            if (item.name == "Battery") {
+                for(int i=0; i<3; i++){
                     AddItem(item);
                 }
             }
@@ -31,11 +33,42 @@ public class InventoryManager : MonoBehaviour
 
     private void Update() {
         if (Input.inputString != null) {
+            if (Input.GetKeyDown(KeyCode.Q)) {
+                Item receivedItem = GetSelectedItem(false);
+                if(receivedItem != null) {
+                    Debug.Log("Using " + receivedItem.name);
+                    if (receivedItem.name == "Map") {
+                        if(mapImage.activeInHierarchy == false) {
+                            mapImage.SetActive(true);
+                            playerIconImage.SetActive(true);
+                            exitButtonImage.SetActive(true);
+                        }
+                        else {
+                            mapImage.SetActive(false);
+                            playerIconImage.SetActive(false);
+                            exitButtonImage.SetActive(false);
+                        }
+                    }
+                    else if (receivedItem.name == "Battery") {
+                        if (flashCheck == true)
+                        {
+                            Item removedItem = GetSelectedItem(true);
+                        }
+                        else {
+                            Debug.Log("Can't Use Battery");
+                        }
+
+                    }
+                }
+                else {
+                    Debug.Log("No Item Selected");
+                }
+            }
             bool isNumber = int.TryParse(Input.inputString, out int number);
             if (isNumber && number > 0 && number < 10) {
                 ChangeSelectedSlot(number - 1);
             }
-        } 
+        }
     }
 
     void ChangeSelectedSlot(int newValue) {
