@@ -8,6 +8,7 @@ public class RobetOptionMenu : MonoBehaviour
     [SerializeField] GameObject optionMenu;
     public void Settings()
     {
+        Debug.Log("CLICKED");
         optionMenu.SetActive(true);
         Time.timeScale = 0;
     }

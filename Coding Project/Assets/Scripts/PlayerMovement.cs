@@ -17,14 +17,14 @@ public class PlayerMovement : MonoBehaviour
     Animator animator;
     string currentState;
     string idleState = PLAYER_DOWN;
-    const string PLAYER_DOWN = "IdleDown";
-    const string PLAYER_UP = "IdleUp";
-    const string PLAYER_LEFT = "IdleLeft";
-    const string PLAYER_RIGHT = "IdleRight";
-    const string PLAYER_DOWN_MOVE = "WalkDown";
-    const string PLAYER_UP_MOVE = "WalkUp";
-    const string PLAYER_LEFT_MOVE = "WalkLeft";
-    const string PLAYER_RIGHT_MOVE = "WalkRight";
+    public const string PLAYER_DOWN = "IdleDown";
+    public const string PLAYER_UP = "IdleUp";
+    public const string PLAYER_LEFT = "IdleLeft";
+    public const string PLAYER_RIGHT = "IdleRight";
+    public const string PLAYER_DOWN_MOVE = "WalkDown";
+    public const string PLAYER_UP_MOVE = "WalkUp";
+    public const string PLAYER_LEFT_MOVE = "WalkLeft";
+    public const string PLAYER_RIGHT_MOVE = "WalkRight";
 
     public AudioSource step1Sound;
     public AudioSource step2Sound;
@@ -44,6 +44,13 @@ public class PlayerMovement : MonoBehaviour
         inputHorizontal = Input.GetAxisRaw("Horizontal");
         inputVertical = Input.GetAxisRaw("Vertical");
     }
+
+    public string IdleState
+    {
+        get { return idleState; }
+    }
+
+    public static string CurrentDirection { get; private set; }
 
     void FixedUpdate()
     {
@@ -73,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
                 idleState = PLAYER_UP;
                 ChangeAnimationState(PLAYER_UP_MOVE);
             }
-
+            CurrentDirection = idleState;
         }
         else{
             rb.velocity = new UnityEngine.Vector2(0f, 0f);
@@ -101,8 +108,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (currentState == newState) return;
 
-        animator.Play(newState);
+        // Assign the current state to the static variable
+        CurrentDirection = newState;
 
+        animator.Play(newState);
         currentState = newState;
     }
 }

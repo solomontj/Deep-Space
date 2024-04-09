@@ -10,6 +10,7 @@ public class VariableMatchingGameController : MonoBehaviour
     [SerializeField] private Sprite bgImage; // The default background image for puzzle cards
     public AudioSource successSound;  // Assign this in the inspector
     public AudioSource failedSound;
+    public AudioSource winSound;
 
     // Array of all possible puzzle sprites and a dynamic list for the game's active puzzles
     public Sprite[] puzzles;
@@ -156,7 +157,7 @@ public class VariableMatchingGameController : MonoBehaviour
         countCorrectGuesses++;
 
         if(countCorrectGuesses == gameGuesses){
-
+            winSound.Play();
             StartCoroutine(FinishGameRoutine());
         }
     }

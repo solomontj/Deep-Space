@@ -35,6 +35,18 @@ public class RobotMovement : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
         moveTimeCounter = moveTime;
         ChooseNewDirection();
+
+        // Set the AudioSource to 3D sound
+        moveSound.spatialBlend = 1.0f; // Set to 1.0 for full 3D sound effect
+
+        // Set the proximity at which the sound is heard at full volume
+        moveSound.minDistance = 1.0f; // Set as needed
+
+        // Set the maximum distance at which the sound can be heard
+        moveSound.maxDistance = 5.0f; // Set as needed
+
+        // Set how audio attenuates with distance
+        moveSound.rolloffMode = AudioRolloffMode.Linear; // Or choose another mode as needed
     }
 
     // Update is called once per frame
