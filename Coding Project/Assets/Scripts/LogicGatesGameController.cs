@@ -15,6 +15,9 @@ public class LogicGatesGameController : MonoBehaviour
     [SerializeField] private Transform gameHolder;
     [SerializeField] private Transform piecePrefab;
     [SerializeField] private GameObject puzzleDoneButton;
+    public AudioSource buttonClickSound;
+    public AudioSource pieceCorrectSound;
+    public AudioSource victorySound;
     private List<Transform> pieces;
     private Vector2Int dimensions;
     private float width;
@@ -32,6 +35,7 @@ public class LogicGatesGameController : MonoBehaviour
         Image image = Instantiate(levelPrefab,levelPanel);
         image.sprite = Sprite.Create(imageA, new Rect(0, 0, imageA.width, imageA.height), new Vector2(0.5f, 0.5f));
         image.GetComponent<Button>().onClick.AddListener(delegate { StartGame(imageA); });
+        buttonClickSound.Play();
     }
 
     public void StartGame(Texture2D jigsawTexture) {
@@ -45,11 +49,28 @@ public class LogicGatesGameController : MonoBehaviour
 
     CreateJigsawPieces(jigsawTexture);
 
+    SetGameHolderPosition();
+
     Scatter();
 
     UpdateBorder();
 
     piecesCorrect = 0;
+    }
+
+    private void SetGameHolderPosition()
+    {
+        Camera cam = Camera.main;
+        float orthoHeight = cam.orthographicSize;
+        float orthoWidth = orthoHeight * cam.aspect;
+
+        // Calculate the center position based on camera view
+        Vector3 centerPosition = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, cam.nearClipPlane));
+
+        // Adjust the Z position as necessary, typically you'd want it just atw or behind your pieces
+        centerPosition.z = 0; // Adjust this based on your camera setup and game's z-axis usage
+
+        gameHolder.position = centerPosition;
     }
 
     Vector2Int GetDimensions(Texture2D jigsawTexture, int difficulty) {
@@ -127,29 +148,32 @@ public class LogicGatesGameController : MonoBehaviour
 
 }
 
-private void UpdateBorder() {
-    LineRenderer lineRenderer = gameHolder.GetComponent<LineRenderer>();
+    private void UpdateBorder()
+    {
+        LineRenderer lineRenderer = gameHolder.GetComponent<LineRenderer>();
 
-    // Calculate half sizes to simplify the code.
-    float halfWidth = (width * dimensions.x) / 2f;
-    float halfHeight = (height * dimensions.y) / 2f;
+        // Calculate half sizes to simplify the code.
+        float halfWidth = (width * dimensions.x) / 2f;
+        float halfHeight = (height * dimensions.y) / 2f;
 
-    // We want the border to be behind the pieces.
-    float borderZ = 0f;
+        // Adjust this value if needed to make sure the border is visible and at the correct depth
+        float borderZ = 0f; // Set border to be at z=0
 
-    // Set border vertices, starting top left, going clockwise.
-    lineRenderer.SetPosition(0, new Vector3(-halfWidth, halfHeight, borderZ));
-    lineRenderer.SetPosition(1, new Vector3(halfWidth, halfHeight, borderZ));
-    lineRenderer.SetPosition(2, new Vector3(halfWidth, -halfHeight, borderZ));
-    lineRenderer.SetPosition(3, new Vector3(-halfWidth, -halfHeight, borderZ));
+        // Set border vertices, starting top left, going clockwise. Make sure to set z to borderZ (which is 0)
+        lineRenderer.SetPosition(0, new Vector3(-halfWidth, halfHeight, -1));
+        lineRenderer.SetPosition(1, new Vector3(halfWidth, halfHeight, -1));
+        lineRenderer.SetPosition(2, new Vector3(halfWidth, -halfHeight, -1));
+        lineRenderer.SetPosition(3, new Vector3(-halfWidth, -halfHeight, -1));
+        lineRenderer.loop = true; // Ensure the border forms a closed loop
 
-    // Set the thickness of the border line.
-    lineRenderer.startWidth = 0.1f;
-    lineRenderer.endWidth = 0.1f;
+        // Set the thickness of the border line.
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
 
-    // Show the border line.
-    lineRenderer.enabled = true;
-  }
+        // Show the border line.
+        lineRenderer.enabled = true;
+    }
+
 
     void Update()
     {
@@ -212,10 +236,12 @@ private void UpdateBorder() {
                 draggingPiece.GetComponent<BoxCollider2D>().enabled = false;
 
                 piecesCorrect++;
+                pieceCorrectSound.Play();
 
                 if (piecesCorrect == pieces.Count)
                 {
                     puzzleDoneButton.SetActive(true);
+                    victorySound.Play();
                 }
             }
         }

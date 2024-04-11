@@ -14,6 +14,10 @@ public class BatteryPickup : MonoBehaviour
 
     private void Start()
     {
+        foreach (var item in pickupItems)
+        {
+            Debug.Log("Loaded pickup item: " + item.name);
+        }
         counter = 0;
         randomNumber = Random.Range(1, 4);
     }

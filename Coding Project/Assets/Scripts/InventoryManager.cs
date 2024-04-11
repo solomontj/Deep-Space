@@ -14,6 +14,9 @@ public class InventoryManager : MonoBehaviour
     public bool flashCheck = false;
     int selectedSlot = -1;
 
+    public AudioSource inventoryPickupAudioSource;
+    public AudioSource flashlightToggleAudioSource;
+
     private bool isFlashlightInInventory = false;
 
     private void Awake()
@@ -23,7 +26,10 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
-        ChangeSelectedSlot(0);
+        if (inventorySlots.Length > 0)
+        {
+            ChangeSelectedSlot(0);  // Ensure there's at least one slot to select
+        }
         foreach (var item in startItems)
         {
             if (item.name == "Battery")
@@ -37,13 +43,12 @@ public class InventoryManager : MonoBehaviour
             {
                 AddItem(item);
             }
-
         }
     }
 
     private void Update()
     {
-        if (Input.inputString != null)
+        if (!string.IsNullOrEmpty(Input.inputString))
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
@@ -53,30 +58,11 @@ public class InventoryManager : MonoBehaviour
                     Debug.Log("Using " + receivedItem.name);
                     if (receivedItem.name == "Map")
                     {
-                        if (mapImage.activeInHierarchy == false)
-                        {
-                            mapImage.SetActive(true);
-                            playerIconImage.SetActive(true);
-                            exitButtonImage.SetActive(true);
-                        }
-                        else
-                        {
-                            mapImage.SetActive(false);
-                            playerIconImage.SetActive(false);
-                            exitButtonImage.SetActive(false);
-                        }
+                        ToggleMapVisibility();
                     }
                     else if (receivedItem.name == "Battery")
                     {
-                        if (flashCheck == true)
-                        {
-                            Item removedItem = GetSelectedItem(true);
-                        }
-                        else
-                        {
-                            Debug.Log("Can't Use Battery");
-                        }
-
+                        TryUseBattery();
                     }
                     if (receivedItem.name == "Flashlight")
                     {
@@ -88,31 +74,82 @@ public class InventoryManager : MonoBehaviour
                     Debug.Log("No Item Selected");
                 }
             }
-            bool isNumber = int.TryParse(Input.inputString, out int number);
-            if (isNumber && number > 0 && number < 10)
+
+            if (int.TryParse(Input.inputString, out int number) && number > 0 && number <= inventorySlots.Length)
             {
                 ChangeSelectedSlot(number - 1);
-                // Update flashlight status whenever the selected slot changes.
-                UpdateFlashlightLightStatus();
             }
         }
         ToggleFlashlightLight();
     }
 
-    private void ToggleFlashlightLight()
+    private void ChangeSelectedSlot(int newSlot)
     {
-        // Assuming the flashCheck is true when the flashlight is being held.
-        if (IsFlashlightHeld())
+        if (newSlot >= 0 && newSlot < inventorySlots.Length)
         {
-            flashCheck = true;
-            FlashLightLightSetActive(true);  // Method to enable the flashlight
+            if (selectedSlot >= 0)
+            {
+                inventorySlots[selectedSlot].Deselect();
+            }
+            inventorySlots[newSlot].Select();
+            selectedSlot = newSlot;
+        }
+    }
+
+    private void UpdateFlashlightLightStatus()
+    {
+        if (IsFlashlightHeld() && isFlashlightInInventory)
+        {
+            flashlightLight.enabled = true;
         }
         else
         {
-            flashCheck = false;
-            FlashLightLightSetActive(false); // Method to disable the flashlight
+            flashlightLight.enabled = false;
         }
     }
+
+    private void ToggleMapVisibility()
+    {
+        bool isActive = !mapImage.activeInHierarchy;
+        mapImage.SetActive(isActive);
+        playerIconImage.SetActive(isActive);
+        exitButtonImage.SetActive(isActive);
+    }
+
+    private void TryUseBattery()
+    {
+        if (flashCheck)
+        {
+            GetSelectedItem(true);  // This assumes that using a battery consumes it
+        }
+        else
+        {
+            Debug.Log("Can't Use Battery");
+        }
+    }
+
+    private void ToggleFlashlightLight()
+    {
+        bool wasFlashlightOn = flashCheck;  // Store the old state
+        flashCheck = IsFlashlightHeld();    // Update the current state based on whether the flashlight is held
+
+        // Check if the state changed
+        if (wasFlashlightOn != flashCheck)
+        {
+            FlashLightLightSetActive(flashCheck);  // Update the light state
+
+            // Play the toggle sound only if the state changes
+            if (flashlightToggleAudioSource && flashlightToggleAudioSource.clip)
+            {
+                flashlightToggleAudioSource.Play();
+            }
+            else
+            {
+                Debug.LogError("Flashlight toggle AudioSource not properly configured or missing AudioClip.");
+            }
+        }
+    }
+
 
     public void FlashLightLightSetActive(bool isActive)
     {
@@ -126,53 +163,61 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    void UpdateFlashlightLightStatus()
+    public bool IsFlashlightHeld()
     {
-        bool isHoldingFlashlight = IsFlashlightHeld();
-        flashlightLight.enabled = isHoldingFlashlight && isFlashlightInInventory;
-    }
-
-    void ChangeSelectedSlot(int newValue)
-    {
-        if (selectedSlot >= 0)
+        if (selectedSlot >= 0 && selectedSlot < inventorySlots.Length)
         {
-            inventorySlots[selectedSlot].Deselect();
+            InventorySlot slot = inventorySlots[selectedSlot];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            return itemInSlot != null && itemInSlot.item.name == "Flashlight";
         }
-
-        inventorySlots[newValue].Select();
-        selectedSlot = newValue;
+        return false;
     }
+
+
     public bool AddItem(Item item)
     {
-        if (item.name == "Flashlight" && !isFlashlightInInventory)
-        {
-            Debug.Log("Flashlight added to inventory.");
-            isFlashlightInInventory = true;
-        }
-
+        bool itemAdded = false;
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.item.stackable == true)
+            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.item.stackable)
             {
                 itemInSlot.count++;
                 itemInSlot.RefreshCount();
-                return true;
+                itemAdded = true;
+                Debug.Log($"Added another {item.name} to existing slot.");
+                break;
             }
         }
 
-        for (int i = 0; i < inventorySlots.Length; i++)
+        if (!itemAdded)
         {
-            InventorySlot slot = inventorySlots[i];
-            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInSlot == null)
+            for (int i = 0; i < inventorySlots.Length; i++)
             {
-                SpawnNewItem(item, slot);
-                return true;
+                InventorySlot slot = inventorySlots[i];
+                if (slot.GetComponentInChildren<InventoryItem>() == null)
+                {
+                    SpawnNewItem(item, slot);
+                    Debug.Log($"Spawned new {item.name} in empty slot.");
+                    itemAdded = true;
+                    break;
+                }
             }
         }
-        return false;
+
+        if (itemAdded)
+        {
+            inventoryPickupAudioSource.Play();  // Play inventory pickup sound
+            Debug.Log($"{item.name} picked up and audio played.");
+        }
+        else
+        {
+            Debug.LogError($"Failed to add {item.name} to the inventory.");
+        }
+
+        return itemAdded;
     }
 
     void SpawnNewItem(Item item, InventorySlot slot)
@@ -189,7 +234,7 @@ public class InventoryManager : MonoBehaviour
         if (itemInSlot != null)
         {
             Item item = itemInSlot.item;
-            if (use == true)
+            if (use)
             {
                 itemInSlot.count--;
                 if (itemInSlot.count <= 0)
@@ -204,16 +249,5 @@ public class InventoryManager : MonoBehaviour
             return item;
         }
         return null;
-    }
-
-    public bool IsFlashlightHeld()
-    {
-        InventorySlot slot = inventorySlots[selectedSlot];
-        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-        if (itemInSlot != null && itemInSlot.item.name == "Flashlight")
-        {
-            return true;
-        }
-        return false;
     }
 }

@@ -1,36 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorBehaviour : MonoBehaviour
 {
-    public bool isDoorOpen = false; 
+    public bool isDoorOpen = false;
+    public AudioSource doorSound;  // AudioSource for door sounds
+
     Vector3 doorClosedPos;
     Vector3 doorOpenedPos;
-    float doorSpeed = 10f; 
-    // Start is called before the first frame update
+    float doorSpeed = 0.7f;
+    bool isSoundPlayed = false;  // Flag to control sound playback
+
     void Awake()
     {
         doorClosedPos = transform.position;
         doorOpenedPos = new Vector3(transform.position.x + 2f, transform.position.y, transform.position.z);
+        doorSound.playOnAwake = false; // Ensure the sound doesn't play automatically
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(isDoorOpen)
+        if (isDoorOpen)
         {
+            if (!isSoundPlayed)
+            {
+                doorSound.Play(); // Play sound only once per opening
+                isSoundPlayed = true; // Set flag to true after playing sound
+            }
             OpenDoor();
         }
-        else 
+        else
         {
+            if (isSoundPlayed) // Reset sound play flag when door closes
+            {
+                isSoundPlayed = false;
+            }
             CloseDoor();
         }
     }
 
     void OpenDoor()
     {
-        if(transform.position != doorOpenedPos)
+        if (transform.position != doorOpenedPos)
         {
             transform.position = Vector3.MoveTowards(transform.position, doorOpenedPos, doorSpeed * Time.deltaTime);
         }
@@ -38,7 +48,7 @@ public class DoorBehaviour : MonoBehaviour
 
     void CloseDoor()
     {
-        if(transform.position != doorClosedPos)
+        if (transform.position != doorClosedPos)
         {
             transform.position = Vector3.MoveTowards(transform.position, doorClosedPos, doorSpeed * Time.deltaTime);
         }

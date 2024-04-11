@@ -7,6 +7,8 @@ public class RobotMovement : MonoBehaviour
     // Components
     Rigidbody2D rb;
     public AudioSource moveSound;
+    public AudioSource randomSound1;  // First random sound
+    public AudioSource randomSound2;  // Second random sound
 
     // Player
     float walkSpeed = 4f;
@@ -47,6 +49,21 @@ public class RobotMovement : MonoBehaviour
 
         // Set how audio attenuates with distance
         moveSound.rolloffMode = AudioRolloffMode.Linear; // Or choose another mode as needed
+        randomSound1.spatialBlend = 1.0f;
+        randomSound2.spatialBlend = 1.0f;
+
+        randomSound1.rolloffMode = AudioRolloffMode.Linear;
+        randomSound2.rolloffMode = AudioRolloffMode.Linear;
+
+        randomSound1.minDistance = 1.0f;
+        randomSound2.minDistance = 1.0f;
+
+        randomSound1.maxDistance = 5.0f;
+        randomSound2.maxDistance = 5.0f;
+
+        randomSound1.playOnAwake = false;
+        randomSound2.playOnAwake = false;
+        StartCoroutine(PlayRandomSounds());
     }
 
     // Update is called once per frame
@@ -141,5 +158,17 @@ public class RobotMovement : MonoBehaviour
         animator.Play(newState);
 
         currentState = newState;
+    }
+
+    IEnumerator PlayRandomSounds()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(5, 1));  // Random delay between 20 to 40 seconds
+            if (Random.value > 0.5f)
+                randomSound1.Play();
+            else
+                randomSound2.Play();
+        }
     }
 }

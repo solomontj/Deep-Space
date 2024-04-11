@@ -3,103 +3,102 @@ using UnityEngine;
 public class Wire : MonoBehaviour
 {
     public static int connectionsMade = 0;
-    public static int totalConnections = 8; // Assuming there are 4 wires to connect
- 
+    public static int totalConnections = 8;  // Total number of correct connections needed
+
     public SpriteRenderer wireEnd;
     public GameObject lightOn;
-    Vector3 startPoint;
-    Vector3 startPosition;
+    public AudioSource correctConnectionSound;  // AudioSource for correct connections
+    public AudioSource incorrectConnectionSound;  // AudioSource for incorrect connections
 
-    Vector3 dragOffset;
-    // Start is called before the first frame update
+    private Vector3 startPoint;
+    private Vector3 startPosition;
+    private Vector3 dragOffset;
+
     void Start()
     {
-        startPoint = transform.parent.position;
-        startPosition = transform.position;
+        startPoint = transform.parent.position;  // Parent's position, assuming parent is the stationary point
+        startPosition = transform.position;  // Initial position for the wire
+
+        // Setup AudioSources if not manually assigned
+        if (correctConnectionSound == null)
+            correctConnectionSound = gameObject.AddComponent<AudioSource>();
+        if (incorrectConnectionSound == null)
+            incorrectConnectionSound = gameObject.AddComponent<AudioSource>();
+
+        correctConnectionSound.playOnAwake = false;
+        incorrectConnectionSound.playOnAwake = false;
     }
 
     void OnMouseDown()
     {
-        // Calculate the offset on mouse down
         dragOffset = transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z - Camera.main.transform.position.z));
     }
 
-  
-    private void OnMouseDrag()
+    void OnMouseDrag()
     {
-      //  Vector3 mousePoint = Input.mousePosition;
-       // mousePoint.z = Camera.main.WorldToScreenPoint(gameObject.transform.position).z; 
-        // Vector3 newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        // newPosition.z = 0;
-
-
-         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z - Camera.main.transform.position.z));
-        Vector3 newPosition = mouseWorldPosition + dragOffset; // Apply the offset here
-        newPosition.z = 0; // Keep the object on the same plane
-
-        LayerMask puzzlePieceLayerMask = LayerMask.GetMask("PuzzlePiece");
-
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(newPosition, .2f, puzzlePieceLayerMask);
-        foreach (Collider2D collider in colliders)
-        {
-            if (collider.gameObject != gameObject) 
-            {
-                UpdateWire(collider.transform.position);
-
-                if(transform.parent.name.Equals(collider.transform.parent.name))
-                {
-                    collider.GetComponent<Wire>()?.Done();
-                    Done();
-                    
-                }
-                return;
-            }
-        }
-
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z - Camera.main.transform.position.z));
+        Vector3 newPosition = mouseWorldPosition + dragOffset;
+        newPosition.z = 0;  // Maintain on the same plane
         UpdateWire(newPosition);
     }
 
-    void Done()
+    void OnMouseUp()
     {
-        lightOn.SetActive(true);
-        connectionsMade++; // Increment the number of connections made
-        if (connectionsMade == totalConnections)
-        {
-            Debug.Log("Done"); // This will display the message in the console
-
-            WiringGameController wiringGameController = FindObjectOfType<WiringGameController>();
-            if (wiringGameController != null)
-            {
-                // Call the CloseGame() method to disable the wire game
-                wiringGameController.CloseGame();
-            }
-            else
-            {
-                Debug.LogError("WiringGameController not found in the scene!");
-            }
-        }
-        Destroy(this);
-}
-
-
-    public void OnMouseUp() 
-    {
-        UpdateWire(startPosition);
+        ProcessConnection();
     }
 
     void UpdateWire(Vector3 newPosition)
     {
         transform.position = newPosition;
-
-        // Get the vector pointing from the current wire's position to the new position
         Vector3 direction = newPosition - startPoint;
         transform.right = direction * transform.lossyScale.x;
-
-        float dist = Vector2.Distance(startPoint, newPosition);
-        wireEnd.size = new Vector2(dist, wireEnd.size.y);   
-    
+        wireEnd.size = new Vector2(Vector2.Distance(startPoint, newPosition), wireEnd.size.y);
     }
 
+    void ProcessConnection()
+    {
+        LayerMask puzzlePieceLayerMask = LayerMask.GetMask("PuzzlePiece");
+        Collider2D collider = Physics2D.OverlapCircle(transform.position, 0.2f, puzzlePieceLayerMask);
 
+        if (collider != null && collider.gameObject != gameObject)
+        {
+            if (transform.parent.name.Equals(collider.transform.parent.name))
+            {
+                CompleteConnection(true);
+                collider.GetComponent<Wire>()?.CompleteConnection(true);
+            }
+            else
+            {
+                CompleteConnection(false);
+            }
+        }
+        else
+        {
+            UpdateWire(startPosition);  // Reset to original position if not over a valid connector
+        }
+    }
 
+    public void CompleteConnection(bool correct)
+    {
+        if (correct)
+        {
+            lightOn.SetActive(true);
+            connectionsMade++;
+            correctConnectionSound.Play();
+            if (connectionsMade >= totalConnections)
+            {
+                Debug.Log("All connections correctly made");
+                WiringGameController wiringGameController = FindObjectOfType<WiringGameController>();
+                if (wiringGameController != null)
+                    wiringGameController.CloseGame();
+                else
+                    Debug.LogError("WiringGameController not found in the scene!");
+            }
+        }
+        else
+        {
+            incorrectConnectionSound.Play();
+            UpdateWire(startPosition);  // Reset the wire position
+        }
+    }
 }

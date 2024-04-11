@@ -8,6 +8,7 @@ public class VariableMatchingGameController : MonoBehaviour
     public GameObject puzzleField; // Public GameObject references for the puzzle area 
     public GameObject map; // Public GameObject references the map to be shown after the game
     [SerializeField] private Sprite bgImage; // The default background image for puzzle cards
+    public AudioSource buttonClick;
     public AudioSource successSound;  // Assign this in the inspector
     public AudioSource failedSound;
     public AudioSource winSound;
@@ -38,7 +39,8 @@ public class VariableMatchingGameController : MonoBehaviour
         AddListeners();
         AddGamePuzzles();
         Shuffle(gamePuzzles);
-        gameGuesses = gamePuzzles.Count / 2; 
+        gameGuesses = gamePuzzles.Count / 2;
+        buttonClick.Play();
     }
 
     // Finds all GameObjects tagged as "PuzzleButton", initializes them with the default background image, and assigns a unique name based on index
