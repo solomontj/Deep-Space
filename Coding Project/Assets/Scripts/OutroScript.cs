@@ -25,7 +25,7 @@ public class OutroScript : MonoBehaviour
         }
         nextButton.playOnAwake = false;
         nextButton.Stop();
-       
+
 
         // Initially disable all captions
         foreach (var subtitle in subtitles)
@@ -50,11 +50,11 @@ public class OutroScript : MonoBehaviour
                 // Enable the current image and subtitle
                 images[i].gameObject.SetActive(true);
                 subtitles[i].gameObject.SetActive(true);
-               
+
 
                 // Wait for the specified delay
                 yield return new WaitForSeconds(delayBetweenImages);
-          
+
                 // After the delay, disable them before the next iteration
                 //images[i].gameObject.SetActive(false);
                 subtitles[i].gameObject.SetActive(false);

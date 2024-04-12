@@ -925,7 +925,7 @@ MonoBehaviour:
   - {fileID: 1939821084}
   nextSceneButton: {fileID: 1460920627}
   backgroundMusic: {fileID: 1432222497}
-  nextButton: {fileID: 0}
+  nextButton: {fileID: 1490986910}
   delayBetweenImages: 6
 --- !u!1 &1017031422
 GameObject:
