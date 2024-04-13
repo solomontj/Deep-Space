@@ -31,5 +31,7 @@ public enum ActionType {
     Light,
     Key,
     Map,
-    Charge
+    Charge,
+    Encrypted,
+    Decrypted
 }

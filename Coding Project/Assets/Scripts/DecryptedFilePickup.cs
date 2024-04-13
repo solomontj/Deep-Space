@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EncryptedFilePickup : MonoBehaviour
+public class DecryptedFilePickup : MonoBehaviour
 {
     public Item[] pickupItems;
     public InventoryManager inventoryManager;
@@ -15,7 +15,7 @@ public class EncryptedFilePickup : MonoBehaviour
             if (!isEmpty) {
                 bool result = inventoryManager.AddItem(pickupItems[0]);
                 if (result == true) {
-                    Debug.Log("Encrypted File added");
+                    Debug.Log("Decrypted File added");
                 }
                 isEmpty = true;
                 this.spriteRenderer.enabled = false;
