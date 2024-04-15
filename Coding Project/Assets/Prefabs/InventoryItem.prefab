@@ -169,9 +169,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 0}
-  screenPosition: {x: 0, y: 0}
-  worldPosition: {x: 0, y: 0}
   countText: {fileID: 2847424781473558564}
   item: {fileID: 0}
   parentAfterDrag: {fileID: 0}
+  originalParent: {fileID: 0}
+  isFromHotbar: 0
   count: 1
+  decryptedFile1: {fileID: 11400000, guid: dc0c2671cafd94fa388cacc0ffef4ce6, type: 2}
+  decryptedFile2: {fileID: 11400000, guid: 1ed79e8a7fb374b029fae3778d4a6f0b, type: 2}
+  decryptedFile3: {fileID: 11400000, guid: d2c8911c8d0583242a560bc82bdccc09, type: 2}
+  toolbarTransform: {fileID: 0}

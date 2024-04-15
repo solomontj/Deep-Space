@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
+using static UnityEditor.Progress;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -16,12 +20,43 @@ public class InventoryManager : MonoBehaviour
 
     public AudioSource inventoryPickupAudioSource;
     public AudioSource flashlightToggleAudioSource;
+    public GameObject contextMenuPrefab; // Assign in inspector
+    private GameObject contextMenuInstance;
+    public Item item;
+
+    public void readFile(Item currItem)
+    {
+        if (currItem != null && currItem.itemName.StartsWith("Decrypted File"))
+        {
+            Debug.Log("Right-clicked with Decrypted File: " + currItem.itemName);
+            if (contextMenuPrefab != null)
+                contextMenuPrefab.SetActive(true);
+            else
+                Debug.LogError("MessageMenu is not assigned.");
+        }
+    }
+
+    public void HideContextMenu()
+    {
+        if (contextMenuInstance != null)
+        {
+            contextMenuInstance.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("No context menu instance foun!");
+        }
+    }
 
     private bool isFlashlightInInventory = false;
 
     private void Awake()
     {
         instance = this;
+        if (contextMenuInstance == null)
+        {
+            Debug.LogError("MessageMenu component is not found in the scene. Please assign it in the Inspector.");
+        }
     }
 
     private void Start()
@@ -64,9 +99,13 @@ public class InventoryManager : MonoBehaviour
                     {
                         TryUseBattery();
                     }
-                    if (receivedItem.name == "Flashlight")
+                    else if (receivedItem.name == "Flashlight")
                     {
                         UpdateFlashlightLightStatus();
+                    }
+                    else if (receivedItem.itemName.StartsWith("Decrypted File"))
+                    {
+                        readFile(receivedItem);
                     }
                 }
                 else
@@ -93,7 +132,25 @@ public class InventoryManager : MonoBehaviour
             }
             inventorySlots[newSlot].Select();
             selectedSlot = newSlot;
+
+            // Print the new selected item's name to the console
+            InventoryItem itemInSlot = inventorySlots[selectedSlot].GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null)
+            {
+                Debug.Log("Selected item: " + itemInSlot.item.itemName);
+            }
+            else
+            {
+                Debug.Log("No item selected in the new slot.");
+            }
         }
+    }
+
+
+    public void RemoveItem(InventoryItem itemToRemove)
+    {
+        // This should correctly handle removing an item from the inventory
+        Destroy(itemToRemove.gameObject); // For simplicity, just destroy the item's GameObject
     }
 
     private void UpdateFlashlightLightStatus()
@@ -225,6 +282,11 @@ public class InventoryManager : MonoBehaviour
         GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
         InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
         inventoryItem.InitialiseItem(item);
+    }
+
+    public Item GetDecryptedItemVersion(Item item)
+    {
+        return item;
     }
 
     public Item GetSelectedItem(bool use)

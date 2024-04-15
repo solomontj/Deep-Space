@@ -6,7 +6,6 @@ public class ProximityDialogueTrigger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("OnTriggerEnter2D called with: " + other.gameObject.name);
         if (other.gameObject.name == "Player")
         {
             characterMonologue.TriggerRobotDialogue();

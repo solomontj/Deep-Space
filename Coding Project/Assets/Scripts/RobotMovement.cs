@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class RobotMovement : MonoBehaviour
+public class RobotMovement : MonoBehaviour, IDropHandler
 {
     // Components
     Rigidbody2D rb;
@@ -29,6 +30,30 @@ public class RobotMovement : MonoBehaviour
     const string PLAYER_UP_MOVE = "WalkUp";
     const string PLAYER_LEFT_MOVE = "WalkLeft";
     const string PLAYER_RIGHT_MOVE = "WalkRight";
+    public List<Item> robotInventory;
+    public RobotOptionMenu optionMenuScript;
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        InventoryItem droppedItem = eventData.pointerDrag.GetComponent<InventoryItem>();
+        if (droppedItem != null)
+        {
+            // Add the item to the robot's inventory
+            robotInventory.Add(droppedItem.item);
+            Debug.Log(droppedItem.item.name + " was dropped on the robot.");
+
+            // Now pass both the item's name and sprite to the method
+            if (optionMenuScript != null)
+            {
+                optionMenuScript.OpenSettingsWithItem(droppedItem.item.name, droppedItem.item.image, droppedItem);
+            }
+            else
+            {
+                Debug.LogError("OptionMenuScript is not assigned!");
+            }
+        }
+    }
+
 
     // Start is called before the first frame update
     void Start()

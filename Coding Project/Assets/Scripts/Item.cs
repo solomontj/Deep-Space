@@ -9,6 +9,7 @@ public class Item : ScriptableObject {
     [Header("Only gameplay")]
     public TileBase tile;
     public ItemType type;
+    public string itemName;
     public ActionType actionType;
     public Vector2Int range = new Vector2Int(5,4);
 
