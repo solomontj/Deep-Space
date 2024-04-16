@@ -16,6 +16,7 @@ public class RobotOptionMenu : MonoBehaviour
     [SerializeField] private Button decryptButton;
 
     private InventoryItem currentlySelectedInventoryItem;
+    private bool isMenuEnabled = false; // Controls whether the menu can be opened
 
     private void Start()
     {
@@ -24,6 +25,12 @@ public class RobotOptionMenu : MonoBehaviour
 
     public void OpenSettingsWithItem(string itemName, Sprite itemSprite, InventoryItem inventoryItem)
     {
+        if (!isMenuEnabled)
+        {
+            Debug.LogWarning("Menu is disabled.");
+            return;
+        }
+
         if (string.IsNullOrEmpty(itemName))
         {
             SetNoItemSelected();
@@ -43,6 +50,12 @@ public class RobotOptionMenu : MonoBehaviour
 
     public void Settings()
     {
+        if (!isMenuEnabled)
+        {
+            Debug.LogWarning("Menu is disabled.");
+            return;
+        }
+
         SetNoItemSelected();
         Debug.Log("Settings clicked");
         optionMenu.SetActive(true);
@@ -65,6 +78,12 @@ public class RobotOptionMenu : MonoBehaviour
 
     public void DecryptFile()
     {
+        if (!isMenuEnabled)
+        {
+            Debug.LogWarning("Menu is disabled.");
+            return;
+        }
+
         if (currentlySelectedInventoryItem != null && selectedItemText.text.StartsWith("Encrypted File"))
         {
             currentlySelectedInventoryItem.DecryptItem(currentlySelectedInventoryItem.item); // Call decrypt method on the currently selected item
@@ -72,5 +91,11 @@ public class RobotOptionMenu : MonoBehaviour
             SetNoItemSelected(); // Optionally reset after decryption
         }
     }
-    // Additional methods and logic for the robot...
+
+    // Public method to enable the menu
+    public void EnableMenu()
+    {
+        isMenuEnabled = true;
+        Debug.Log("Menu has been enabled.");
+    }
 }

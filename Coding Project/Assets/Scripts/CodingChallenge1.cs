@@ -5,34 +5,57 @@ using UnityEngine;
 
 public class CodingChallenge1 : MonoBehaviour
 {
-    [SerializeField] private TMP_InputField inputField; // Assign in inspector
-    [SerializeField] private TextMeshProUGUI codeText; // Assign in inspector
+    [SerializeField] private TMP_Text editableText; // Reference to your TMP_Text component that displays editable text
+    [SerializeField] private TextMeshProUGUI codeText; // Reference to your TextMeshProUGUI component that displays code text
+    [SerializeField] private GameObject successIndicator; // Reference to the GameObject that should appear on success
 
-    private void Awake()
+    private string currentText = ""; // To keep track of the text and update only when it changes
+
+    void Awake()
     {
-        // Add a listener to catch when the input field's content changes
-        inputField.onValueChanged.AddListener(HandleInputChanged);
+        // Initially hide the success indicator
+        if (successIndicator != null)
+            successIndicator.SetActive(false);
     }
 
-    private void HandleInputChanged(string input)
+    void Update()
     {
+        // Check if the text has changed since the last frame
+        if (editableText.text != currentText)
+        {
+            currentText = editableText.text;
+            HandleTextUpdated(currentText);
+        }
+    }
+
+    private void HandleTextUpdated(string input)
+    {
+        // Automatically remove an underscore from the end of the input text if it exists
+        if (input.EndsWith("_"))
+        {
+            input = input.Remove(input.Length - 1);
+            editableText.text = input; // Update the text field to reflect this change
+        }
+
         if (int.TryParse(input, out int number) && number > 10)
         {
-            // If input is a number greater than 10, set the color to green
-            inputField.textComponent.color = Color.green;
+            // If input is a number greater than 10, set the color to green for both texts
+            editableText.color = Color.green;
             codeText.color = Color.green;
+
+            // Show the success indicator
+            if (successIndicator != null)
+                successIndicator.SetActive(true);
         }
         else
         {
-            // If input is not a number greater than 10, reset color to default (black)
-            inputField.textComponent.color = Color.black;
-            codeText.color = Color.black;
-        }
-    }
+            // Reset the text color to white if the condition is not met
+            editableText.color = Color.white;
+            codeText.color = Color.red;
 
-    // Ensure to remove the listener when the GameObject is destroyed
-    private void OnDestroy()
-    {
-        inputField.onValueChanged.RemoveListener(HandleInputChanged);
+            // Hide the success indicator
+            if (successIndicator != null)
+                successIndicator.SetActive(false);
+        }
     }
 }

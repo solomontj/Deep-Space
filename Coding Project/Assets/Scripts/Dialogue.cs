@@ -14,9 +14,10 @@ public class CharacterMonologue : MonoBehaviour
     };
     public string[] robotInteraction =
     {
-        "Hmm. Looks like the droid still works.",
-        "Maybe if I can find the ship's info, I can give it to the robot to decrypt.",
-        "Let's gather some."
+        "Wow! It's Sparky the Robot...",
+        "but he's not moving...",
+        "Let's check out his code on the computer.",
+        "Maybe he can show us what's really in these files."
     };
     public float textSpeed = 0.05f;
     private int index;

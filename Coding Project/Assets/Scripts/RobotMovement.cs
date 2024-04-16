@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class RobotMovement : MonoBehaviour, IDropHandler
+public class RobotMovement : MonoBehaviour, IDropHandler, IBeginDragHandler, IEndDragHandler
 {
     // Components
     Rigidbody2D rb;
@@ -32,113 +32,136 @@ public class RobotMovement : MonoBehaviour, IDropHandler
     const string PLAYER_RIGHT_MOVE = "WalkRight";
     public List<Item> robotInventory;
     public RobotOptionMenu optionMenuScript;
+    private bool canMove = false;
+    private bool isDragging = false;
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        isDragging = true;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        isDragging = false;
+    }
 
     public void OnDrop(PointerEventData eventData)
     {
-        InventoryItem droppedItem = eventData.pointerDrag.GetComponent<InventoryItem>();
-        if (droppedItem != null)
+        if (!isDragging)  // Ensure that we process drop only when not dragging
         {
-            // Add the item to the robot's inventory
-            robotInventory.Add(droppedItem.item);
-            Debug.Log(droppedItem.item.name + " was dropped on the robot.");
+            InventoryItem droppedItem = eventData.pointerDrag.GetComponent<InventoryItem>();
+            if (droppedItem != null)
+            {
+                robotInventory.Add(droppedItem.item);
+                Debug.Log(droppedItem.item.name + " was dropped on the robot.");
 
-            // Now pass both the item's name and sprite to the method
-            if (optionMenuScript != null)
-            {
-                optionMenuScript.OpenSettingsWithItem(droppedItem.item.name, droppedItem.item.image, droppedItem);
-            }
-            else
-            {
-                Debug.LogError("OptionMenuScript is not assigned!");
+                if (optionMenuScript != null)
+                {
+                    optionMenuScript.OpenSettingsWithItem(droppedItem.item.name, droppedItem.item.image, droppedItem);
+                }
+                else
+                {
+                    Debug.LogError("OptionMenuScript is not assigned!");
+                }
             }
         }
+    }
+
+    public void allowMovement()
+    {
+        canMove = true;
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody2D>();
-        animator = gameObject.GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         moveTimeCounter = moveTime;
-        ChooseNewDirection();
+        SetupAudioSources();
+    }
 
-        // Set the AudioSource to 3D sound
-        moveSound.spatialBlend = 1.0f; // Set to 1.0 for full 3D sound effect
-
-        // Set the proximity at which the sound is heard at full volume
-        moveSound.minDistance = 1.0f; // Set as needed
-
-        // Set the maximum distance at which the sound can be heard
-        moveSound.maxDistance = 5.0f; // Set as needed
-
-        // Set how audio attenuates with distance
-        moveSound.rolloffMode = AudioRolloffMode.Linear; // Or choose another mode as needed
-        randomSound1.spatialBlend = 1.0f;
-        randomSound2.spatialBlend = 1.0f;
-
-        randomSound1.rolloffMode = AudioRolloffMode.Linear;
-        randomSound2.rolloffMode = AudioRolloffMode.Linear;
-
-        randomSound1.minDistance = 1.0f;
-        randomSound2.minDistance = 1.0f;
-
-        randomSound1.maxDistance = 5.0f;
-        randomSound2.maxDistance = 5.0f;
-
-        randomSound1.playOnAwake = false;
-        randomSound2.playOnAwake = false;
+    void SetupAudioSources()
+    {
+        ConfigureAudioSource(moveSound, 1.0f, 1.0f, 5.0f, AudioRolloffMode.Linear);
+        ConfigureAudioSource(randomSound1, 1.0f, 1.0f, 5.0f, AudioRolloffMode.Linear);
+        ConfigureAudioSource(randomSound2, 1.0f, 1.0f, 5.0f, AudioRolloffMode.Linear);
         StartCoroutine(PlayRandomSounds());
     }
 
-    // Update is called once per frame
-    void Update()
+        void ConfigureAudioSource(AudioSource source, float spatialBlend, float minDistance, float maxDistance, AudioRolloffMode rolloffMode)
     {
-        moveTimeCounter -= Time.deltaTime;
-        if (moveTimeCounter <= 0)
+        source.spatialBlend = spatialBlend;
+        source.minDistance = minDistance;
+        source.maxDistance = maxDistance;
+        source.rolloffMode = rolloffMode;
+        source.playOnAwake = false;
+    }
+
+    private void Update()
+    {
+        if (canMove)
         {
-            ChooseNewDirection();
-            moveTimeCounter = moveTime;
+            moveTimeCounter -= Time.deltaTime;
+            if (moveTimeCounter <= 0)
+            {
+                ChooseNewDirection();
+                moveTimeCounter = moveTime;
+            }
         }
     }
 
     void FixedUpdate()
     {
-        MoveCharacter(movementDirection);
-        // Check if the robot has stopped moving
-        if (rb.velocity.magnitude <= 0.1f)
+        if (canMove)
         {
-            if (moveSound.isPlaying)
+            MoveCharacter(movementDirection);
+            if (rb.velocity.magnitude <= 0.1f)
             {
                 moveSound.Stop();
             }
+        }
+        else
+        {
+            if (rb.velocity != Vector2.zero)
+            {
+                rb.velocity = Vector2.zero;
+                ChangeAnimationState(idleState);
+            }
+        }
+    }
+
+    public void ToggleMovement()
+    {
+        canMove = !canMove;  // Toggle the movement state
+        if (!canMove && moveSound.isPlaying)
+        {
+            moveSound.Stop();  // Stop moving sound when movement is disabled
         }
     }
 
     void MoveCharacter(Vector2 direction)
     {
-        if (direction.x != 0 || direction.y != 0)
+        if (direction.magnitude > 0)
         {
-            rb.velocity = new Vector2(direction.x * walkSpeed, direction.y * walkSpeed);
-            PlayStepSound();
+            rb.velocity = direction * walkSpeed;
+            if (!moveSound.isPlaying)
+            {
+                PlayStepSound();
+            }
             UpdateAnimation(direction);
         }
         else
         {
             rb.velocity = Vector2.zero;
+            if (moveSound.isPlaying)
+            {
+                moveSound.Stop();
+            }
             ChangeAnimationState(idleState);
         }
     }
-
-
-    void PlayStepSound()
-    {
-        if (!moveSound.isPlaying)
-        {
-            moveSound.Play();
-        }
-    }
-
 
     void UpdateAnimation(Vector2 direction)
     {
@@ -185,15 +208,27 @@ public class RobotMovement : MonoBehaviour, IDropHandler
         currentState = newState;
     }
 
+    void PlayStepSound()
+    {
+        if (canMove && !moveSound.isPlaying)  // Only play step sound if movement is allowed
+        {
+            moveSound.Play();
+        }
+    }
+
     IEnumerator PlayRandomSounds()
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(5, 1));  // Random delay between 20 to 40 seconds
-            if (Random.value > 0.5f)
-                randomSound1.Play();
-            else
-                randomSound2.Play();
+            yield return new WaitForSeconds(Random.Range(5, 10));  // Random delay between 5 to 10 seconds
+            if (canMove && Random.value > 0.5f)  // Check canMove condition before playing sounds
+            {
+                if (!randomSound1.isPlaying && !randomSound2.isPlaying)  // Additional check to prevent overlapping sounds
+                {
+                    AudioSource chosenSound = (Random.value > 0.5f) ? randomSound1 : randomSound2;
+                    chosenSound.Play();
+                }
+            }
         }
     }
 }

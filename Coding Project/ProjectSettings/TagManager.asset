@@ -51,6 +51,12 @@ TagManager:
   - name: Player
     uniqueID: 823557009
     locked: 0
+  - name: Menu
+    uniqueID: 3677972431
+    locked: 0
+  - name: Keyboard
+    uniqueID: 2273821409
+    locked: 0
   - name: wire
     uniqueID: 3696017183
     locked: 0
