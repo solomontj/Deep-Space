@@ -163662,8 +163662,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DoorBehaviour, Assembly-CSharp
+      - m_Target: {fileID: 60519824}
+        m_TargetAssemblyTypeName: CCDoorBehaviour, Assembly-CSharp
         m_MethodName: ToggleDoor
         m_Mode: 1
         m_Arguments:
