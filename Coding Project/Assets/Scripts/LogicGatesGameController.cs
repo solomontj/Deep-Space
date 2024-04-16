@@ -157,7 +157,7 @@ public class LogicGatesGameController : MonoBehaviour
         float halfHeight = (height * dimensions.y) / 2f;
 
         // Adjust this value if needed to make sure the border is visible and at the correct depth
-        float borderZ = 0f; // Set border to be at z=0
+       // float borderZ = 0f; // Set border to be at z=0
 
         // Set border vertices, starting top left, going clockwise. Make sure to set z to borderZ (which is 0)
         lineRenderer.SetPosition(0, new Vector3(-halfWidth, halfHeight, -1));
