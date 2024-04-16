@@ -118,6 +118,7 @@
     <Compile Include="Assets\Scripts\OutroScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Scripts\RobotPartPickup.cs" />
+    <Compile Include="Assets\Custom Keyboard\Scripts\Keys.cs" />
     <Compile Include="Assets\Scripts\OpenComputerScreen.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Scripts\Door1Behaviour.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Assets\Scripts\SwitchBehaviour.cs" />
     <Compile Include="Assets\Scripts\LightFlashing.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Custom Keyboard\Scripts\TextBlock.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Scripts\EncryptedFile2Pickup1.cs" />
     <Compile Include="Assets\Scripts\VariableMatchingGameController.cs" />

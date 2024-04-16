@@ -13,7 +13,7 @@ public class InventoryManager : MonoBehaviour
     public Item[] startItems;
     public InventorySlot[] inventorySlots;
     public GameObject inventoryItemPrefab;
-    public GameObject mapImage, playerIconImage, exitButtonImage, cardImage;
+    public GameObject mapImage, playerIconImage, cardImage;
     public Light2D flashlightLight;
     public bool flashCheck = false;
     int selectedSlot = -1;
@@ -174,14 +174,12 @@ public class InventoryManager : MonoBehaviour
         bool isActive = !mapImage.activeInHierarchy;
         mapImage.SetActive(isActive);
         playerIconImage.SetActive(isActive);
-        exitButtonImage.SetActive(isActive);
     }
 
     private void ToggleCardVisibility()
     {
         bool isActive = !cardImage.activeInHierarchy;
         cardImage.SetActive(isActive);
-        exitButtonImage.SetActive(isActive);
     }
 
     private void TryUseBattery()
