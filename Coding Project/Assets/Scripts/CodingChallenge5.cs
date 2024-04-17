@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CodingChallenge3 : MonoBehaviour
+public class CodingChallenge5 : MonoBehaviour
 {
     [SerializeField] private TMP_Text editableText; // Reference to your TMP_Text component that displays editable text
     [SerializeField] private TextMeshProUGUI codeText; // Reference to your TextMeshProUGUI component that displays code text
@@ -37,9 +37,11 @@ public class CodingChallenge3 : MonoBehaviour
             editableText.text = input; // Update the text field to reflect this change
         }
 
-        if (int.TryParse(input, out int number) && number == 625)
+        // Check if the first three characters are all digits and are not equal to each other
+        if (input.Length >= 3 && char.IsDigit(input[0]) && char.IsDigit(input[1]) && char.IsDigit(input[2]) &&
+            input[0] != input[1] && input[1] != input[2] && input[0] != input[2])
         {
-            // If input is a number greater than 10, set the color to green for both texts
+            // If the first three digits are not equal, set the color to green for both texts
             editableText.color = Color.green;
             codeText.color = Color.green;
 
@@ -58,4 +60,5 @@ public class CodingChallenge3 : MonoBehaviour
                 successIndicator.SetActive(false);
         }
     }
+
 }

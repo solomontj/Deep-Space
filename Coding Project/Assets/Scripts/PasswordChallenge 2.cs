@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CodingChallenge3 : MonoBehaviour
+public class PasswordChallenge2 : MonoBehaviour
 {
     [SerializeField] private TMP_Text editableText; // Reference to your TMP_Text component that displays editable text
     [SerializeField] private TextMeshProUGUI codeText; // Reference to your TextMeshProUGUI component that displays code text
     [SerializeField] private GameObject successIndicator; // Reference to the GameObject that should appear on success
+    [SerializeField] private GameObject successIndicator2; // Reference to the GameObject that should appear on success
+    [SerializeField] private GameObject successIndicator3; // Reference to the GameObject that should appear on success
+    [SerializeField] private GameObject successIndicator4; // Reference to the GameObject that should appear on success
 
     private string currentText = ""; // To keep track of the text and update only when it changes
 
@@ -37,15 +40,22 @@ public class CodingChallenge3 : MonoBehaviour
             editableText.text = input; // Update the text field to reflect this change
         }
 
-        if (int.TryParse(input, out int number) && number == 625)
+        input = input.ToUpper();
+
+        if (input == "COMET")
         {
-            // If input is a number greater than 10, set the color to green for both texts
+            // If input matches "EARTH", set the color to green for both texts
             editableText.color = Color.green;
             codeText.color = Color.green;
 
             // Show the success indicator
             if (successIndicator != null)
                 successIndicator.SetActive(true);
+            successIndicator2.SetActive(false);
+            successIndicator3.SetActive(true);
+            successIndicator4.SetActive(false);
+
+            Debug.Log("Correct input received: " + input);
         }
         else
         {
@@ -56,6 +66,8 @@ public class CodingChallenge3 : MonoBehaviour
             // Hide the success indicator
             if (successIndicator != null)
                 successIndicator.SetActive(false);
+
+            Debug.Log("Incorrect input. Current input: " + input);
         }
     }
 }

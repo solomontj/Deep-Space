@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CodingChallenge3 : MonoBehaviour
+public class BeamCode3 : MonoBehaviour
 {
     [SerializeField] private TMP_Text editableText; // Reference to your TMP_Text component that displays editable text
     [SerializeField] private TextMeshProUGUI codeText; // Reference to your TextMeshProUGUI component that displays code text
     [SerializeField] private GameObject successIndicator; // Reference to the GameObject that should appear on success
+    [SerializeField] private GameObject successIndicator2; // Reference to the GameObject that should appear on success
+    [SerializeField] private GameObject successIndicator3; // Reference to the GameObject that should appear on success
+    [SerializeField] private GameObject successIndicator4; // Reference to the GameObject that should appear on success
+    [SerializeField] private GameObject successIndicator5;
 
     private string currentText = ""; // To keep track of the text and update only when it changes
 
@@ -37,7 +41,9 @@ public class CodingChallenge3 : MonoBehaviour
             editableText.text = input; // Update the text field to reflect this change
         }
 
-        if (int.TryParse(input, out int number) && number == 625)
+        input = input.ToUpper();
+
+        if (input == "34UEX")
         {
             // If input is a number greater than 10, set the color to green for both texts
             editableText.color = Color.green;
@@ -46,6 +52,10 @@ public class CodingChallenge3 : MonoBehaviour
             // Show the success indicator
             if (successIndicator != null)
                 successIndicator.SetActive(true);
+            successIndicator2.SetActive(false);
+            successIndicator3.SetActive(false);
+            successIndicator4.SetActive(false);
+            successIndicator5.SetActive(true);
         }
         else
         {

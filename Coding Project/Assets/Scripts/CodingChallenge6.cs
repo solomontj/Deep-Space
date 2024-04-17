@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CodingChallenge3 : MonoBehaviour
+public class CodingChallenge6 : MonoBehaviour
 {
     [SerializeField] private TMP_Text editableText; // Reference to your TMP_Text component that displays editable text
     [SerializeField] private TextMeshProUGUI codeText; // Reference to your TextMeshProUGUI component that displays code text
@@ -37,15 +37,19 @@ public class CodingChallenge3 : MonoBehaviour
             editableText.text = input; // Update the text field to reflect this change
         }
 
-        if (int.TryParse(input, out int number) && number == 625)
+        input = input.ToUpper();
+
+        if (input == "A>B" || input == "B<A" || input == "A > B" || input == "B > A")
         {
-            // If input is a number greater than 10, set the color to green for both texts
+            // If input matches "EARTH", set the color to green for both texts
             editableText.color = Color.green;
             codeText.color = Color.green;
 
             // Show the success indicator
             if (successIndicator != null)
                 successIndicator.SetActive(true);
+
+            Debug.Log("Correct input received: " + input);
         }
         else
         {
@@ -56,6 +60,8 @@ public class CodingChallenge3 : MonoBehaviour
             // Hide the success indicator
             if (successIndicator != null)
                 successIndicator.SetActive(false);
+
+            Debug.Log("Incorrect input. Current input: " + input);
         }
     }
 }

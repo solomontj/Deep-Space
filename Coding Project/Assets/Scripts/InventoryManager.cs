@@ -88,6 +88,7 @@ public class InventoryManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 Item receivedItem = GetSelectedItem(false);
+                item = receivedItem;
                 if (receivedItem != null)
                 {
                     Debug.Log("Using " + receivedItem.name);
