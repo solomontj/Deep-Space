@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\ClickableGameObject.cs" />
     <Compile Include="Assets\Scripts\CodingChallange2.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
+    <Compile Include="Assets\Scripts\CodingChallange3.cs" />
     <Compile Include="Assets\Scripts\DecryptedFilePickup.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Scripts\AstroidScript.cs" />

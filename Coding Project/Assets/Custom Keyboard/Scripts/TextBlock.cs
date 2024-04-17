@@ -30,5 +30,11 @@ public class TextBlock : MonoBehaviour
 
         StartCoroutine(blinkingCursor());
     }
+
+    public void ResetTextbox()
+{
+    StopCoroutine("blinkingCursor"); // Stop the blinking cursor coroutine
+    textBlock.text = ""; // Clear the text
+}
 }
 

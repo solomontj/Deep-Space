@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CodingChallenge2 : MonoBehaviour
+public class CodingChallenge3 : MonoBehaviour
 {
     [SerializeField] private TMP_Text editableText; // Reference to your TMP_Text component that displays editable text
     [SerializeField] private TextMeshProUGUI codeText; // Reference to your TextMeshProUGUI component that displays code text
@@ -37,7 +37,7 @@ public class CodingChallenge2 : MonoBehaviour
             editableText.text = input; // Update the text field to reflect this change
         }
 
-        if (int.TryParse(input, out int number) && number > 100)
+        if (int.TryParse(input, out int number) && number > 90)
         {
             // If input is a number greater than 10, set the color to green for both texts
             editableText.color = Color.green;
