@@ -68,6 +68,7 @@
     <Compile Include="Assets/Scripts/DecryptedFilePickup.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/VertexShakeA.cs" />
     <Compile Include="Assets/Scripts/AstroidScript.cs" />
+    <Compile Include="Assets/Scripts/OutroSceneLoader.cs" />
     <Compile Include="Assets/Scripts/Wire.cs" />
     <Compile Include="Assets/Scripts/CaptainsRoomComputerScreen.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/TMP_ExampleScript_01.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Assets/Scripts/AddButtons.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/VertexZoom.cs" />
     <Compile Include="Assets/Scripts/BeamCode 3.cs" />
+    <Compile Include="Assets/Scripts/RobotDialogue.cs" />
     <Compile Include="Assets/Scripts/OutroScript.cs" />
     <Compile Include="Assets/TextMesh Pro/Examples &amp; Extras/Scripts/Benchmark02.cs" />
     <Compile Include="Assets/Scripts/RobotPartPickup.cs" />

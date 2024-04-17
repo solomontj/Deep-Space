@@ -2,28 +2,15 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 
-public class CharacterMonologue : MonoBehaviour
+public class RobotDialogue : MonoBehaviour
 {
     public TextMeshProUGUI textComponent; // Ensure this is assigned.
-    public string[] gameStartText =
+    private string[] gameStartText =
     {
-        "Ah, my memory...",
-        "This looks like the old cryochamber room.",
-        "It's hard to see.",
-        "If only I had some source of light..."
-    };
-    private string[] robotInteraction =
-    {
-        "Wow! It's Sparky the Robot...",
-        "but he's not moving...",
-        "Let's check out his code on the computer.",
-        "Maybe he can show us what's really in these files."
-    };
-    private string[] lightsOnText =
-    {
-        "Finally, some lights...",
-        "No longer will be needing that flashlight then.",
-        "Lets do some searching around this ship."
+        "HELLO! I AM SPARKY THE ROBOT.",
+        "I LOVE TO READ FILES.",
+        "DRAG AND DROP ENCRYPTED FILES ON ME...",
+        "AND I'LL CRACK THE CODE LIKE AN EGG!!!!"
     };
     public float textSpeed = 0.05f;
     private int index;
@@ -91,19 +78,11 @@ public class CharacterMonologue : MonoBehaviour
     public void TriggerRobotDialogue()
     {
         if (!robotDialogueTriggered)
-        {
-            currentDialogue = robotInteraction;
+        { 
             robotDialogueTriggered = true;  // Ensure this dialogue doesn't trigger more than once
             gameObject.SetActive(true);  // Activate the dialogue box
             StartDialogue();
         }
-    }
-
-    public void TriggerLightsOnDialogue()
-    {
-        currentDialogue = lightsOnText;
-        gameObject.SetActive(true);  // Activate the dialogue box
-        StartDialogue();
     }
 
     void Update()

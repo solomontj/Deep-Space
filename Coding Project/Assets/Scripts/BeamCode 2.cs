@@ -12,7 +12,7 @@ public class BeamCode2 : MonoBehaviour
     [SerializeField] private GameObject successIndicator3; // Reference to the GameObject that should appear on success
     [SerializeField] private GameObject successIndicator4; // Reference to the GameObject that should appear on success
     [SerializeField] private GameObject successIndicator5;
-
+    [SerializeField] private GameObject successIndicator6;
     private string currentText = ""; // To keep track of the text and update only when it changes
 
     void Awake()
@@ -56,6 +56,7 @@ public class BeamCode2 : MonoBehaviour
             successIndicator3.SetActive(false);
             successIndicator4.SetActive(false);
             successIndicator5.SetActive(true);
+            successIndicator6.SetActive(true);
         }
         else
         {

@@ -5,6 +5,8 @@ public class WiringGameController : MonoBehaviour
 {
     public GameObject wireGame;
     public GameObject playerlight;
+    public GameObject lightDialogueObject;
+    public CharacterMonologue lightMonologue;
     public UnityEngine.Rendering.Universal.Light2D globalLight;
     public AudioSource victorySound;  // AudioSource for the victory sound
     public AudioSource buttonSound;
@@ -32,6 +34,8 @@ public class WiringGameController : MonoBehaviour
         {
             victorySound.Play();  // Play the victory sound when the game is won
         }
+        lightDialogueObject.SetActive(true);
+        lightMonologue.TriggerLightsOnDialogue();
         StartCoroutine(CloseGameAfterDelay(2)); // Start the coroutine with a 2-second delay
     }
 

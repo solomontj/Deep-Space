@@ -11,6 +11,7 @@ public class PasswordChallenge3 : MonoBehaviour
     [SerializeField] private GameObject successIndicator2; // Reference to the GameObject that should appear on success
     [SerializeField] private GameObject successIndicator3; // Reference to the GameObject that should appear on success
     [SerializeField] private GameObject successIndicator4; // Reference to the GameObject that should appear on success
+    [SerializeField] private GameObject successIndicator5; // Reference to the GameObject that should
 
     private string currentText = ""; // To keep track of the text and update only when it changes
 
@@ -54,6 +55,7 @@ public class PasswordChallenge3 : MonoBehaviour
             successIndicator2.SetActive(false);
             successIndicator3.SetActive(true);
             successIndicator4.SetActive(false);
+            successIndicator5.SetActive(true);
 
             Debug.Log("Correct input received: " + input);
         }
