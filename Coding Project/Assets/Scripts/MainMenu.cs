@@ -5,21 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public AudioSource audioSource; // Assign this in the inspector
+    public AudioSource audioSource; 
 
     void Start()
     {
-        // Disable play on awake to prevent the audio from playing immediately
+
         audioSource.playOnAwake = false;
         audioSource.Stop();
     }
 
     public void PlayGame()
     {
-        // Play the audio clip for starting the game
+
         audioSource.Play();
 
-        // Load the scene after the audio clip has finished playing
         StartCoroutine(LoadSceneAfterAudio(audioSource.clip.length));
     }
 
@@ -31,10 +30,9 @@ public class MainMenu : MonoBehaviour
 
     public void QuitGame()
     {
-        // Play the audio clip for quitting the game
+
         audioSource.Play();
 
-        // Quit the application after the audio clip has finished playing
         StartCoroutine(QuitAfterAudio(audioSource.clip.length));
     }
 
@@ -42,9 +40,8 @@ public class MainMenu : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        // Quit the application
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false; // Only for use in the editor
+        UnityEditor.EditorApplication.isPlaying = false; 
 #else
         Application.Quit();
 #endif

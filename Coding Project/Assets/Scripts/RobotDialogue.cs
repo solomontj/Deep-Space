@@ -4,7 +4,7 @@ using System.Collections;
 
 public class RobotDialogue : MonoBehaviour
 {
-    public TextMeshProUGUI textComponent; // Ensure this is assigned.
+    public TextMeshProUGUI textComponent;
     private string[] gameStartText =
     {
         "HELLO! I AM SPARKY THE ROBOT.",
@@ -15,13 +15,13 @@ public class RobotDialogue : MonoBehaviour
     public float textSpeed = 0.05f;
     private int index;
     private string[] currentDialogue;
-    private bool robotDialogueTriggered = false;  // To ensure robot dialogue happens only once
+    private bool robotDialogueTriggered = false;
 
     void Start()
     {
         textComponent.text = string.Empty;
         currentDialogue = gameStartText;
-        gameObject.SetActive(true);  // Ensure the dialogue box is active
+        gameObject.SetActive(true);
         StartDialogue();
     }
 
@@ -29,11 +29,11 @@ public class RobotDialogue : MonoBehaviour
     {
         if (!gameObject.activeInHierarchy)
         {
-            gameObject.SetActive(true);  // Activate the dialogue box if it's not active
+            gameObject.SetActive(true);
         }
         index = 0;
-        textComponent.text = string.Empty; // Clear the text component before starting new dialogue
-        StopAllCoroutines();  // Ensure to stop any ongoing typing coroutine
+        textComponent.text = string.Empty;
+        StopAllCoroutines();
         StartCoroutine(TypeLine());
     }
 
@@ -52,20 +52,20 @@ public class RobotDialogue : MonoBehaviour
         {
             index++;
             textComponent.text = string.Empty;
-            StopAllCoroutines();  // Stop current coroutine to ensure no overlap occurs
+            StopAllCoroutines();
             StartCoroutine(TypeLine());
         }
         else
         {
-            CloseDialogue();  // Call CloseDialogue when all lines are shown
+            CloseDialogue();
         }
     }
 
     public void CloseDialogue()
     {
-        StopAllCoroutines();  // Ensure to stop any ongoing typing coroutine
-        textComponent.text = string.Empty; // Clear text after dialogue is closed
-        gameObject.SetActive(false);  // Hide/disable the dialogue UI after the last line
+        StopAllCoroutines();
+        textComponent.text = string.Empty;
+        gameObject.SetActive(false);
     }
 
     public void HideDialogue()
@@ -78,16 +78,16 @@ public class RobotDialogue : MonoBehaviour
     public void TriggerRobotDialogue()
     {
         if (!robotDialogueTriggered)
-        { 
-            robotDialogueTriggered = true;  // Ensure this dialogue doesn't trigger more than once
-            gameObject.SetActive(true);  // Activate the dialogue box
+        {
+            robotDialogueTriggered = true;
+            gameObject.SetActive(true);
             StartDialogue();
         }
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && textComponent.text.Length == currentDialogue[index].Length) // Check if the current line is fully displayed
+        if (Input.GetMouseButtonDown(0) && textComponent.text.Length == currentDialogue[index].Length)
         {
             NextLine();
         }

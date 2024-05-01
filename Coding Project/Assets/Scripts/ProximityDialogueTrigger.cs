@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ProximityDialogueTrigger : MonoBehaviour
 {
-    public CharacterMonologue characterMonologue; // Assign in inspector
+    public CharacterMonologue characterMonologue;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -12,12 +12,11 @@ public class ProximityDialogueTrigger : MonoBehaviour
         }
     }
 
-
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            characterMonologue.HideDialogue();  // Optional: Hide dialogue when player leaves
+            characterMonologue.HideDialogue();
         }
     }
 }

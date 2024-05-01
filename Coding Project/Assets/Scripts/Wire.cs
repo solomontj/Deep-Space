@@ -3,12 +3,12 @@ using UnityEngine;
 public class Wire : MonoBehaviour
 {
     public static int connectionsMade = 0;
-    public static int totalConnections = 8;  // Total number of correct connections needed
+    public static int totalConnections = 8;
 
     public SpriteRenderer wireEnd;
     public GameObject lightOn;
-    public AudioSource correctConnectionSound;  // AudioSource for correct connections
-    public AudioSource incorrectConnectionSound;  // AudioSource for incorrect connections
+    public AudioSource correctConnectionSound;
+    public AudioSource incorrectConnectionSound;
 
     private Vector3 startPoint;
     private Vector3 startPosition;
@@ -16,10 +16,9 @@ public class Wire : MonoBehaviour
 
     void Start()
     {
-        startPoint = transform.parent.position;  // Parent's position, assuming parent is the stationary point
-        startPosition = transform.position;  // Initial position for the wire
+        startPoint = transform.parent.position;
+        startPosition = transform.position;
 
-        // Setup AudioSources if not manually assigned
         if (correctConnectionSound == null)
             correctConnectionSound = gameObject.AddComponent<AudioSource>();
         if (incorrectConnectionSound == null)
@@ -38,7 +37,7 @@ public class Wire : MonoBehaviour
     {
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z - Camera.main.transform.position.z));
         Vector3 newPosition = mouseWorldPosition + dragOffset;
-        newPosition.z = 0;  // Maintain on the same plane
+        newPosition.z = 0;
         UpdateWire(newPosition);
     }
 
@@ -74,7 +73,7 @@ public class Wire : MonoBehaviour
         }
         else
         {
-            UpdateWire(startPosition);  // Reset to original position if not over a valid connector
+            UpdateWire(startPosition);
         }
     }
 
@@ -98,7 +97,7 @@ public class Wire : MonoBehaviour
         else
         {
             incorrectConnectionSound.Play();
-            UpdateWire(startPosition);  // Reset the wire position
+            UpdateWire(startPosition);
         }
     }
 }

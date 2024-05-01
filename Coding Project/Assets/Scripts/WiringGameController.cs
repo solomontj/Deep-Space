@@ -8,7 +8,7 @@ public class WiringGameController : MonoBehaviour
     public GameObject lightDialogueObject;
     public CharacterMonologue lightMonologue;
     public UnityEngine.Rendering.Universal.Light2D globalLight;
-    public AudioSource victorySound;  // AudioSource for the victory sound
+    public AudioSource victorySound;
     public AudioSource buttonSound;
     public float brightIntensity = 1f;
 
@@ -17,13 +17,12 @@ public class WiringGameController : MonoBehaviour
         CenterGame();
     }
 
-    // This method centers the wireGame on the screen
     private void CenterGame()
     {
-        Camera mainCamera = Camera.main;  // Get the main camera
+        Camera mainCamera = Camera.main;
         Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, mainCamera.nearClipPlane);
         Vector3 worldCenter = mainCamera.ScreenToWorldPoint(screenCenter);
-        worldCenter.z = 0;  // Ensure the game object is placed at z=0 (adjust this depending on your game's camera setup)
+        worldCenter.z = 0;
         wireGame.transform.position = worldCenter;
         buttonSound.Play();
     }
@@ -32,17 +31,17 @@ public class WiringGameController : MonoBehaviour
     {
         if (Wire.connectionsMade >= Wire.totalConnections)
         {
-            victorySound.Play();  // Play the victory sound when the game is won
+            victorySound.Play();
         }
         lightDialogueObject.SetActive(true);
         lightMonologue.TriggerLightsOnDialogue();
-        StartCoroutine(CloseGameAfterDelay(2)); // Start the coroutine with a 2-second delay
+        StartCoroutine(CloseGameAfterDelay(2));
     }
 
     private IEnumerator CloseGameAfterDelay(float delay)
     {
-        yield return new WaitForSeconds(delay); // Wait for the specified delay
-        wireGame.SetActive(false); // Then deactivate the wireGame GameObject
+        yield return new WaitForSeconds(delay);
+        wireGame.SetActive(false);
         playerlight.SetActive(false);
         globalLight.intensity = brightIntensity;
     }

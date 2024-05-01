@@ -12,11 +12,11 @@ public class RobotOptionMenu : MonoBehaviour
     [SerializeField] private TMP_Text selectedItemText;
     [SerializeField] private Image selectedItemImage;
     [SerializeField] private Sprite cancelSprite;
-    [SerializeField] private GameObject decryptFileButtonGroup; // Reference to the decrypt file button GameObject
+    [SerializeField] private GameObject decryptFileButtonGroup;
     [SerializeField] private Button decryptButton;
 
     private InventoryItem currentlySelectedInventoryItem;
-    private bool isMenuEnabled = false; // Controls whether the menu can be opened
+    private bool isMenuEnabled = false;
 
     private void Start()
     {
@@ -71,9 +71,9 @@ public class RobotOptionMenu : MonoBehaviour
 
     private void SetNoItemSelected()
     {
-        selectedItemText.text = "No Item Selected"; // Default message when no item is selected
-        selectedItemImage.sprite = cancelSprite; // Reset the image to default
-        decryptFileButtonGroup.SetActive(false); // Hide the decrypt button by default
+        selectedItemText.text = "No Item Selected";
+        selectedItemImage.sprite = cancelSprite;
+        decryptFileButtonGroup.SetActive(false);
     }
 
     public void DecryptFile()
@@ -86,13 +86,12 @@ public class RobotOptionMenu : MonoBehaviour
 
         if (currentlySelectedInventoryItem != null && selectedItemText.text.StartsWith("Encrypted File"))
         {
-            currentlySelectedInventoryItem.DecryptItem(currentlySelectedInventoryItem.item); // Call decrypt method on the currently selected item
+            currentlySelectedInventoryItem.DecryptItem(currentlySelectedInventoryItem.item);
             Debug.Log("File decrypted successfully.");
-            SetNoItemSelected(); // Optionally reset after decryption
+            SetNoItemSelected();
         }
     }
 
-    // Public method to enable the menu
     public void EnableMenu()
     {
         isMenuEnabled = true;

@@ -4,13 +4,13 @@ using TMPro;
 public class AutoEncapsulateInput : MonoBehaviour
 {
     [SerializeField]
-    private TMP_Text textDisplay;  // Reference to your TMP Text
+    private TMP_Text textDisplay;
 
-    private string currentText = ""; // To keep track of the actual text without formatting
+    private string currentText = "";
 
     private void Awake()
     {
-        // Initialize the text with encapsulation if needed
+
         if (!string.IsNullOrEmpty(textDisplay.text))
         {
             currentText = StripFormatting(textDisplay.text);
@@ -20,7 +20,7 @@ public class AutoEncapsulateInput : MonoBehaviour
 
     private void Update()
     {
-        // Check if the text has changed since the last frame by comparing unformatted versions
+
         string newText = StripFormatting(textDisplay.text);
         if (newText != currentText)
         {
@@ -29,20 +29,18 @@ public class AutoEncapsulateInput : MonoBehaviour
         }
     }
 
-    // Update the visible text display to include formatting
     private void UpdateTextDisplay()
     {
         if (!string.IsNullOrEmpty(currentText))
         {
-            textDisplay.text = $"({currentText});"; // Encapsulate with parentheses and add semicolon
+            textDisplay.text = $"({currentText});";
         }
         else
         {
-            textDisplay.text = "();"; // Default text with empty parentheses and semicolon
+            textDisplay.text = "();";
         }
     }
 
-    // Remove formatting from the displayed text to check against the internal representation
     private string StripFormatting(string formattedText)
     {
         if (formattedText.StartsWith("(") && formattedText.EndsWith(");"))

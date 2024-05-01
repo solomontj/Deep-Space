@@ -3,12 +3,12 @@ using UnityEngine;
 public class DoorBehaviour : MonoBehaviour
 {
     public bool isDoorOpen = false;
-    public AudioSource doorSound;  // AudioSource component for door sounds
+    public AudioSource doorSound;
 
     Vector3 doorClosedPos;
     Vector3 doorOpenedPos;
     float doorSpeed = 10f;
-    private bool isSoundPlayed = false;  // Ensures sound is played only once per open
+    private bool isSoundPlayed = false;
 
     void Awake()
     {
@@ -26,7 +26,7 @@ public class DoorBehaviour : MonoBehaviour
         else
         {
             CloseDoor();
-            if (isSoundPlayed)  // Reset sound played flag when door closes
+            if (isSoundPlayed)
             {
                 isSoundPlayed = false;
             }
@@ -40,7 +40,6 @@ public class DoorBehaviour : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, doorOpenedPos, doorSpeed * Time.deltaTime);
         }
 
-        // Play the sound only once when the door starts to open
         if (!isSoundPlayed)
         {
             doorSound.Play();
@@ -58,6 +57,6 @@ public class DoorBehaviour : MonoBehaviour
 
     public void ToggleDoor()
     {
-        isDoorOpen = !isDoorOpen; // Toggle the state of the door
+        isDoorOpen = !isDoorOpen;
     }
 }

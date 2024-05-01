@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class MessageMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject contextMenuPrefab; // Assign the prefab in the Inspector
-    [SerializeField] private GameObject decryptedFile1Display; // GameObject for Decrypted File 1
-    [SerializeField] private GameObject decryptedFile2Display; // GameObject for Decrypted File 2
-    [SerializeField] private GameObject decryptedFile3Display; // GameObject for Decrypted File 3
+    [SerializeField] private GameObject contextMenuPrefab;
+    [SerializeField] private GameObject decryptedFile1Display;
+    [SerializeField] private GameObject decryptedFile2Display;
+    [SerializeField] private GameObject decryptedFile3Display;
 
     private GameObject contextMenuInstance;
     private Item currItem;
 
-    // Update is called once per frame
     void Update()
     {
         UpdateCurrentItem();
@@ -22,7 +21,7 @@ public class MessageMenu : MonoBehaviour
     {
         if (InventoryManager.instance != null && InventoryManager.instance.item != currItem)
         {
-            currItem = InventoryManager.instance.item; // Access the public 'item' from InventoryManager
+            currItem = InventoryManager.instance.item;
             Debug.Log("Item Updated: " + currItem.itemName);
             UpdateDisplayBasedOnItem();
         }

@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections; // Required for IEnumerator
+using System.Collections;
 
 public class OutroSceneLoader : MonoBehaviour
 {
@@ -14,12 +14,12 @@ public class OutroSceneLoader : MonoBehaviour
 
     public void Home()
     {
-        StartCoroutine(LoadHomeSceneAfterDelay(4)); // Call Coroutine to delay scene loading
+        StartCoroutine(LoadHomeSceneAfterDelay(4));
     }
 
     IEnumerator LoadHomeSceneAfterDelay(float delay)
     {
-        yield return new WaitForSecondsRealtime(delay); // Wait for 4 seconds in real-time
+        yield return new WaitForSecondsRealtime(delay);
         SceneManager.LoadScene(3);
         Time.timeScale = 1;
     }

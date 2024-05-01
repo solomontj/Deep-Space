@@ -8,14 +8,12 @@ public class CCDoorBehaviour : MonoBehaviour
     Vector3 doorClosedPos;
     Vector3 doorOpenedPos;
     float doorSpeed = 10f; 
-    // Start is called before the first frame update
     void Awake()
     {
         doorClosedPos = transform.position;
         doorOpenedPos = new Vector3(transform.position.x+2f, transform.position.y , transform.position.z);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(isDoorOpen)
@@ -46,6 +44,6 @@ public class CCDoorBehaviour : MonoBehaviour
 
     public void ToggleDoor()
     {
-        isDoorOpen = !isDoorOpen; // Toggle the state of the door
+        isDoorOpen = !isDoorOpen;
     }
 }

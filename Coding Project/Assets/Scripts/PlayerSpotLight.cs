@@ -7,7 +7,7 @@ public class FollowPlayer : MonoBehaviour
 
     void Update()
     {
-        // This will make the light follow the player with the given offset
+
         transform.position = playerTransform.position + offset;
     }
 }

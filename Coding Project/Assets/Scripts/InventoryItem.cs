@@ -21,7 +21,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [SerializeField] public Item decryptedFile2;
     [SerializeField] public Item decryptedFile3;
 
-    // Reference to the toolbar for comparison
     [SerializeField] private Transform toolbarTransform;
 
     private void Awake()
@@ -109,7 +108,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (isFromHotbar)
         {
-            // Additional actions if needed
+
         }
         isFromHotbar = false;
     }

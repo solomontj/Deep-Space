@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //Components
+
     Rigidbody2D rb;
 
-    //Player
     float walkSpeed = 4f;
     float speedLimiter = 0.7f;
     float inputHorizontal;
     float inputVertical;
 
-    // Animations & states
     Animator animator;
     string currentState;
     string idleState = PLAYER_DOWN;
@@ -30,15 +28,12 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource step2Sound;
     bool isStep1 = true;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!enabled) return;
@@ -55,8 +50,10 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (inputHorizontal != 0 || inputVertical != 0){
-            if(inputHorizontal != 0 && inputVertical != 0){
+        if (inputHorizontal != 0 || inputVertical != 0)
+        {
+            if (inputHorizontal != 0 && inputVertical != 0)
+            {
                 inputHorizontal *= speedLimiter;
                 inputVertical *= speedLimiter;
             }
@@ -65,33 +62,38 @@ public class PlayerMovement : MonoBehaviour
 
             PlayStepSound();
 
-            if (inputHorizontal < 0) {
+            if (inputHorizontal < 0)
+            {
                 idleState = PLAYER_LEFT;
                 ChangeAnimationState(PLAYER_LEFT_MOVE);
             }
-            else if(inputHorizontal > 0) {
+            else if (inputHorizontal > 0)
+            {
                 idleState = PLAYER_RIGHT;
                 ChangeAnimationState(PLAYER_RIGHT_MOVE);
             }
-            else if(inputVertical < 0) {
+            else if (inputVertical < 0)
+            {
                 idleState = PLAYER_DOWN;
                 ChangeAnimationState(PLAYER_DOWN_MOVE);
             }
-            else if(inputVertical > 0) {
+            else if (inputVertical > 0)
+            {
                 idleState = PLAYER_UP;
                 ChangeAnimationState(PLAYER_UP_MOVE);
             }
             CurrentDirection = idleState;
         }
-        else{
+        else
+        {
             rb.velocity = new UnityEngine.Vector2(0f, 0f);
-            ChangeAnimationState(idleState); 
+            ChangeAnimationState(idleState);
         }
     }
 
     void PlayStepSound()
     {
-        // Toggle between step1 and step2
+
         if (isStep1 && !step1Sound.isPlaying)
         {
             step1Sound.Play();
@@ -100,21 +102,16 @@ public class PlayerMovement : MonoBehaviour
         {
             step2Sound.Play();
         }
-        isStep1 = !isStep1; // Switch steps
+        isStep1 = !isStep1;
     }
 
-
-    // Animation state changer
     void ChangeAnimationState(string newState)
     {
         if (currentState == newState) return;
 
-        // Assign the current state to the static variable
         CurrentDirection = newState;
 
         animator.Play(newState);
         currentState = newState;
     }
 }
-
-

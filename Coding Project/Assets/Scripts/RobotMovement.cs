@@ -5,20 +5,18 @@ using UnityEngine.EventSystems;
 
 public class RobotMovement : MonoBehaviour, IDropHandler, IBeginDragHandler, IEndDragHandler
 {
-    // Components
+
     Rigidbody2D rb;
     public AudioSource moveSound;
-    public AudioSource randomSound1;  // First random sound
-    public AudioSource randomSound2;  // Second random sound
+    public AudioSource randomSound1;
+    public AudioSource randomSound2;
 
-    // Player
     float walkSpeed = 4f;
     float speedLimiter = 0.8f;
     float moveTime = 0.5f;
     float moveTimeCounter;
     Vector2 movementDirection;
 
-    // Animations & states
     Animator animator;
     string currentState;
     string idleState = PLAYER_DOWN;
@@ -47,7 +45,7 @@ public class RobotMovement : MonoBehaviour, IDropHandler, IBeginDragHandler, IEn
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (!isDragging)  // Ensure that we process drop only when not dragging
+        if (!isDragging)
         {
             InventoryItem droppedItem = eventData.pointerDrag.GetComponent<InventoryItem>();
             if (droppedItem != null)
@@ -72,8 +70,6 @@ public class RobotMovement : MonoBehaviour, IDropHandler, IBeginDragHandler, IEn
         canMove = true;
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -90,7 +86,7 @@ public class RobotMovement : MonoBehaviour, IDropHandler, IBeginDragHandler, IEn
         StartCoroutine(PlayRandomSounds());
     }
 
-        void ConfigureAudioSource(AudioSource source, float spatialBlend, float minDistance, float maxDistance, AudioRolloffMode rolloffMode)
+    void ConfigureAudioSource(AudioSource source, float spatialBlend, float minDistance, float maxDistance, AudioRolloffMode rolloffMode)
     {
         source.spatialBlend = spatialBlend;
         source.minDistance = minDistance;
@@ -134,10 +130,10 @@ public class RobotMovement : MonoBehaviour, IDropHandler, IBeginDragHandler, IEn
 
     public void ToggleMovement()
     {
-        canMove = !canMove;  // Toggle the movement state
+        canMove = !canMove;
         if (!canMove && moveSound.isPlaying)
         {
-            moveSound.Stop();  // Stop moving sound when movement is disabled
+            moveSound.Stop();
         }
     }
 
@@ -198,7 +194,6 @@ public class RobotMovement : MonoBehaviour, IDropHandler, IBeginDragHandler, IEn
         movementDirection = newDirection;
     }
 
-    // Animation state changer
     void ChangeAnimationState(string newState)
     {
         if (currentState == newState) return;
@@ -210,7 +205,7 @@ public class RobotMovement : MonoBehaviour, IDropHandler, IBeginDragHandler, IEn
 
     void PlayStepSound()
     {
-        if (canMove && !moveSound.isPlaying)  // Only play step sound if movement is allowed
+        if (canMove && !moveSound.isPlaying)
         {
             moveSound.Play();
         }
@@ -220,10 +215,10 @@ public class RobotMovement : MonoBehaviour, IDropHandler, IBeginDragHandler, IEn
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(5, 10));  // Random delay between 5 to 10 seconds
-            if (canMove && Random.value > 0.5f)  // Check canMove condition before playing sounds
+            yield return new WaitForSeconds(Random.Range(5, 10));
+            if (canMove && Random.value > 0.5f)
             {
-                if (!randomSound1.isPlaying && !randomSound2.isPlaying)  // Additional check to prevent overlapping sounds
+                if (!randomSound1.isPlaying && !randomSound2.isPlaying)
                 {
                     AudioSource chosenSound = (Random.value > 0.5f) ? randomSound1 : randomSound2;
                     chosenSound.Play();

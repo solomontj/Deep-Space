@@ -20,7 +20,7 @@ public class InventoryManager : MonoBehaviour
 
     public AudioSource inventoryPickupAudioSource;
     public AudioSource flashlightToggleAudioSource;
-    public GameObject contextMenuPrefab; // Assign in inspector
+    public GameObject contextMenuPrefab;
     private GameObject contextMenuInstance;
     public Item item;
 
@@ -63,7 +63,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (inventorySlots.Length > 0)
         {
-            ChangeSelectedSlot(0);  // Ensure there's at least one slot to select
+            ChangeSelectedSlot(0);
         }
         foreach (var item in startItems)
         {
@@ -138,7 +138,6 @@ public class InventoryManager : MonoBehaviour
             inventorySlots[newSlot].Select();
             selectedSlot = newSlot;
 
-            // Print the new selected item's name to the console
             InventoryItem itemInSlot = inventorySlots[selectedSlot].GetComponentInChildren<InventoryItem>();
             if (itemInSlot != null)
             {
@@ -151,11 +150,10 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-
     public void RemoveItem(InventoryItem itemToRemove)
     {
-        // This should correctly handle removing an item from the inventory
-        Destroy(itemToRemove.gameObject); // For simplicity, just destroy the item's GameObject
+
+        Destroy(itemToRemove.gameObject);
     }
 
     private void UpdateFlashlightLightStatus()
@@ -187,7 +185,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (flashCheck)
         {
-            GetSelectedItem(true);  // This assumes that using a battery consumes it
+            GetSelectedItem(true);
         }
         else
         {
@@ -197,15 +195,13 @@ public class InventoryManager : MonoBehaviour
 
     private void ToggleFlashlightLight()
     {
-        bool wasFlashlightOn = flashCheck;  // Store the old state
-        flashCheck = IsFlashlightHeld();    // Update the current state based on whether the flashlight is held
+        bool wasFlashlightOn = flashCheck;
+        flashCheck = IsFlashlightHeld();
 
-        // Check if the state changed
         if (wasFlashlightOn != flashCheck)
         {
-            FlashLightLightSetActive(flashCheck);  // Update the light state
+            FlashLightLightSetActive(flashCheck);
 
-            // Play the toggle sound only if the state changes
             if (flashlightToggleAudioSource && flashlightToggleAudioSource.clip)
             {
                 flashlightToggleAudioSource.Play();
@@ -216,7 +212,6 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-
 
     public void FlashLightLightSetActive(bool isActive)
     {
@@ -240,7 +235,6 @@ public class InventoryManager : MonoBehaviour
         }
         return false;
     }
-
 
     public bool AddItem(Item item)
     {
@@ -276,7 +270,7 @@ public class InventoryManager : MonoBehaviour
 
         if (itemAdded)
         {
-            inventoryPickupAudioSource.Play();  // Play inventory pickup sound
+            inventoryPickupAudioSource.Play();
             Debug.Log($"{item.name} picked up and audio played.");
         }
         else

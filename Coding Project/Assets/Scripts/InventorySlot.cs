@@ -31,10 +31,9 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         {
             InventoryItem itemInSlot = GetComponentInChildren<InventoryItem>();
 
-            // Check if the slot already contains an item
             if (itemInSlot != null)
             {
-                // Swap items between slots
+
                 Transform droppedItemOriginalParent = droppedItem.originalParent;
                 droppedItem.originalParent = itemInSlot.originalParent;
                 itemInSlot.originalParent = droppedItemOriginalParent;
@@ -50,7 +49,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             }
             else
             {
-                // If the slot is empty, simply place the dragged item into it
+
                 droppedItem.transform.SetParent(transform);
                 droppedItem.transform.position = transform.position;
                 droppedItem.parentAfterDrag = transform;
@@ -58,4 +57,3 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         }
     }
 }
-
