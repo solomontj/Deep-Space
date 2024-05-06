@@ -1,24 +1,94 @@
 ﻿<Properties StartupConfiguration="{744FC122-1D92-6976-ECE6-19AE6FD4815F}|">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="3a172b7c-f57f-48ec-9bd7-79d6bdebbde4" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/InputModules/BaseInput.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5d3ca8b0-4e72-40ef-b7c5-b3f225df0486" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CodingChallange2.cs">
     <Files>
-      <File FileName="Assets/PauseMenu.cs" Line="26" Column="2" />
-      <File FileName="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/InputModules/BaseInput.cs" Line="1" Column="1" />
+      <File FileName="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/InputModules/BaseInput.cs" />
+      <File FileName="Assets/Scripts/FlashlightPickup.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/LogicGatesGameController.cs" Line="230" Column="2" />
+      <File FileName="Assets/Scripts/RobotMovement.cs" Line="229" Column="2" />
+      <File FileName="Assets/Scripts/InventoryManager.cs" Line="319" Column="2" />
+      <File FileName="Assets/Scripts/DoorBehaviour.cs" Line="62" Column="2" />
+      <File FileName="Assets/Scripts/PasswordChallenge1.cs" Line="72" Column="2" />
+      <File FileName="Assets/Scripts/CodingChallange2.cs" Line="40" Column="33" />
+      <File FileName="Assets/Scripts/PasswordChallenge 2.cs" Line="73" Column="2" />
+      <File FileName="Assets/Scripts/PasswordChallenge3.cs" Line="73" Column="2" />
+      <File FileName="Assets/Scripts/PasswordChallenge4.cs" Line="73" Column="2" />
+      <File FileName="Assets/Scripts/PasswordChallenge5.cs" Line="73" Column="2" />
+      <File FileName="Assets/Scripts/BeamCode 1.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/BeamCode 2.cs" Line="56" Column="40" />
+      <File FileName="Assets/Scripts/BeamCode 3.cs" Line="56" Column="40" />
+      <File FileName="Assets/Scripts/PauseMenu.cs" Line="25" Column="6" />
+      <File FileName="Assets/Scripts/AutoEncapsulateInput.cs" Line="18" Column="10" />
+      <File FileName="Assets/Scripts/AddButtons.cs" Line="22" Column="2" />
+      <File FileName="Assets/Scripts/AstroidScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/BatteryPickup.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/BrokenFlashingLight2D.cs" Line="36" Column="14" />
+      <File FileName="Assets/Scripts/CaptainsRoomComputerScreen.cs" Line="6" Column="1" />
+      <File FileName="Assets/Scripts/cardpickup.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CCDoorbehaviour.cs" Line="47" Column="34" />
+      <File FileName="Assets/Scripts/ClearText.cs" Line="1" Column="13" />
+      <File FileName="Assets/Scripts/ClickableGameObject.cs" Line="7" Column="1" />
+      <File FileName="Assets/Scripts/CodingChallange3.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CodingChallenge1.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CodingChallenge4.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CodingChallenge5.cs" Line="46" Column="17" />
+      <File FileName="Assets/Scripts/CodingChallenge6.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/DecryptedFilePickup.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/DemoScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Dialogue.cs" Line="116" Column="2" />
+      <File FileName="Assets/Scripts/Door1Behaviour.cs" Line="50" Column="2" />
+      <File FileName="Assets/Scripts/Doorbehaviour2.cs" Line="50" Column="2" />
+      <File FileName="Assets/Scripts/DraggableItem.cs" Line="17" Column="2" />
+      <File FileName="Assets/Scripts/EncryptedFile1Pickup.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/EncryptedFile2Pickup1.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/EncryptedFile3Pickup2.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/FlashLightController.cs" Line="13" Column="10" />
+      <File FileName="Assets/Scripts/IntroScript.cs" Line="73" Column="2" />
+      <File FileName="Assets/Scripts/InventoryItem.cs" Line="115" Column="2" />
+      <File FileName="Assets/Scripts/InventorySlot.cs" Line="59" Column="2" />
+      <File FileName="Assets/Scripts/Item.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/KeyPickups.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/LightFlashing.cs" Line="49" Column="2" />
+      <File FileName="Assets/Scripts/LightManager.cs" Line="19" Column="2" />
+      <File FileName="Assets/Scripts/MainMenu.cs" Line="49" Column="2" />
+      <File FileName="Assets/Scripts/MapIcon.cs" Line="18" Column="2" />
+      <File FileName="Assets/Scripts/MapPickup.cs" Line="15" Column="8" />
+      <File FileName="Assets/Scripts/MessageMenu.cs" Line="71" Column="2" />
+      <File FileName="Assets/Scripts/OpenComputerScreen.cs" Line="22" Column="2" />
+      <File FileName="Assets/Scripts/OutroSceneLoader.cs" Line="32" Column="2" />
+      <File FileName="Assets/Scripts/OutroScript.cs" Line="64" Column="2" />
+      <File FileName="Assets/Scripts/PlayerController.cs" Line="88" Column="2" />
+      <File FileName="Assets/Scripts/PlayerMovement.cs" Line="117" Column="2" />
+      <File FileName="Assets/Scripts/PlayerSpotLight.cs" Line="13" Column="2" />
+      <File FileName="Assets/Scripts/ProximityDialogueTrigger.cs" Line="22" Column="2" />
+      <File FileName="Assets/Scripts/RandomizeWires.cs" Line="18" Column="2" />
+      <File FileName="Assets/Scripts/RobotDialogue.cs" Line="95" Column="2" />
+      <File FileName="Assets/Scripts/RobotOptionMenu.cs" Line="100" Column="2" />
+      <File FileName="Assets/Scripts/RobotPartPickup.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/SoundEffectsPlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/SwitchBehaviour.cs" Line="20" Column="1" />
+      <File FileName="Assets/Scripts/Wire.cs" Line="103" Column="2" />
+      <File FileName="Assets/Scripts/VariableMatchingGameController.cs" Line="180" Column="2" />
+      <File FileName="Assets/Scripts/WiringGameController.cs" Line="48" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Coding Project" expanded="True">
-            <Node name="Assets" expanded="True" />
+          <Node name="Coding Project">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="CodingChallange2.cs" selected="True" />
+              </Node>
+            </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

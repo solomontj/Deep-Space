@@ -4,86 +4,114 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //Components
+
     Rigidbody2D rb;
 
-    //Player
     float walkSpeed = 4f;
     float speedLimiter = 0.7f;
     float inputHorizontal;
     float inputVertical;
 
-    // Animations & states
     Animator animator;
     string currentState;
     string idleState = PLAYER_DOWN;
-    const string PLAYER_DOWN = "IdleDown";
-    const string PLAYER_UP = "IdleUp";
-    const string PLAYER_LEFT = "IdleLeft";
-    const string PLAYER_RIGHT = "IdleRight";
-    const string PLAYER_DOWN_MOVE = "WalkDown";
-    const string PLAYER_UP_MOVE = "WalkUp";
-    const string PLAYER_LEFT_MOVE = "WalkLeft";
-    const string PLAYER_RIGHT_MOVE = "WalkRight";
-    
+    public const string PLAYER_DOWN = "IdleDown";
+    public const string PLAYER_UP = "IdleUp";
+    public const string PLAYER_LEFT = "IdleLeft";
+    public const string PLAYER_RIGHT = "IdleRight";
+    public const string PLAYER_DOWN_MOVE = "WalkDown";
+    public const string PLAYER_UP_MOVE = "WalkUp";
+    public const string PLAYER_LEFT_MOVE = "WalkLeft";
+    public const string PLAYER_RIGHT_MOVE = "WalkRight";
 
-    // Start is called before the first frame update
+    public AudioSource step1Sound;
+    public AudioSource step2Sound;
+    bool isStep1 = true;
+
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         animator = gameObject.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (!enabled) return;
         inputHorizontal = Input.GetAxisRaw("Horizontal");
         inputVertical = Input.GetAxisRaw("Vertical");
     }
 
+    public string IdleState
+    {
+        get { return idleState; }
+    }
+
+    public static string CurrentDirection { get; private set; }
+
     void FixedUpdate()
     {
-        if (inputHorizontal != 0 || inputVertical != 0){
-            if(inputHorizontal != 0 && inputVertical != 0){
+        if (inputHorizontal != 0 || inputVertical != 0)
+        {
+            if (inputHorizontal != 0 && inputVertical != 0)
+            {
                 inputHorizontal *= speedLimiter;
                 inputVertical *= speedLimiter;
             }
 
             rb.velocity = new UnityEngine.Vector2(inputHorizontal * walkSpeed, inputVertical * walkSpeed);
 
-            if(inputHorizontal < 0) {
+            PlayStepSound();
+
+            if (inputHorizontal < 0)
+            {
                 idleState = PLAYER_LEFT;
                 ChangeAnimationState(PLAYER_LEFT_MOVE);
             }
-            else if(inputHorizontal > 0) {
+            else if (inputHorizontal > 0)
+            {
                 idleState = PLAYER_RIGHT;
                 ChangeAnimationState(PLAYER_RIGHT_MOVE);
             }
-            else if(inputVertical < 0) {
+            else if (inputVertical < 0)
+            {
                 idleState = PLAYER_DOWN;
                 ChangeAnimationState(PLAYER_DOWN_MOVE);
             }
-            else if(inputVertical > 0) {
+            else if (inputVertical > 0)
+            {
                 idleState = PLAYER_UP;
                 ChangeAnimationState(PLAYER_UP_MOVE);
             }
-
+            CurrentDirection = idleState;
         }
-        else{
+        else
+        {
             rb.velocity = new UnityEngine.Vector2(0f, 0f);
-            ChangeAnimationState(idleState); 
+            ChangeAnimationState(idleState);
         }
     }
 
-    // Animation state changer
+    void PlayStepSound()
+    {
+
+        if (isStep1 && !step1Sound.isPlaying)
+        {
+            step1Sound.Play();
+        }
+        else if (!isStep1 && !step2Sound.isPlaying)
+        {
+            step2Sound.Play();
+        }
+        isStep1 = !isStep1;
+    }
+
     void ChangeAnimationState(string newState)
     {
         if (currentState == newState) return;
 
-        animator.Play(newState);
+        CurrentDirection = newState;
 
+        animator.Play(newState);
         currentState = newState;
     }
 }
-
-

@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Play Scene.unity
     guid: fd4d0f3ef580bb44d9dd941eba5828e1
+  - enabled: 1
+    path: Assets/Scenes/Outro Scene.unity
+    guid: d99d579de37f643e294a913e14870992
+  - enabled: 0
+    path: Assets/Scenes/Wiring Game.unity
+    guid: 38d5889c4731f2f44a8885c3c974b116
   m_configObjects: {}

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FlashlightPickup : MonoBehaviour
@@ -19,6 +17,7 @@ public class FlashlightPickup : MonoBehaviour
                 }
                 isEmpty = true;
                 this.spriteRenderer.enabled = false;
+                inventoryManager.flashCheck = true;
             }
         }
     }

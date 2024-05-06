@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class Door1Behaviour : MonoBehaviour
 {
-    public bool isDoorOpen = false; 
+    public bool isDoorOpen = false;
     Vector3 doorClosedPos;
     Vector3 doorOpenedPos;
-    float doorSpeed = 10f; 
-    // Start is called before the first frame update
+    float doorSpeed = 10f;
+
     void Awake()
     {
         doorClosedPos = transform.position;
         doorOpenedPos = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(isDoorOpen)
+        if (isDoorOpen)
         {
             OpenDoor();
         }
-        else 
+        else
         {
             CloseDoor();
         }
@@ -30,7 +29,7 @@ public class Door1Behaviour : MonoBehaviour
 
     void OpenDoor()
     {
-        if(transform.position != doorOpenedPos)
+        if (transform.position != doorOpenedPos)
         {
             transform.position = Vector3.MoveTowards(transform.position, doorOpenedPos, doorSpeed * Time.deltaTime);
         }
@@ -38,7 +37,7 @@ public class Door1Behaviour : MonoBehaviour
 
     void CloseDoor()
     {
-        if(transform.position != doorClosedPos)
+        if (transform.position != doorClosedPos)
         {
             transform.position = Vector3.MoveTowards(transform.position, doorClosedPos, doorSpeed * Time.deltaTime);
         }
@@ -46,6 +45,6 @@ public class Door1Behaviour : MonoBehaviour
 
     public void ToggleDoor()
     {
-        isDoorOpen = !isDoorOpen; // Toggle the state of the door
+        isDoorOpen = !isDoorOpen;
     }
 }
