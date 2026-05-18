@@ -1,4 +1,5 @@
 # DeepSpace
+  by Solomon Jones, Adam Shaar, Olivia Guzik, and Kathleen Melonashi
 
 "Deep Space" is a dynamic puzzle game set in the year 2245, providing an immersive escape
 room experience in a futuristic space setting. Players awake aboard the IEE (Infinity's Edge
